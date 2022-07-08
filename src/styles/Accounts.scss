@@ -1,0 +1,20 @@
+.accounts-wrapper {
+    padding: 20px;
+}
+.status{
+    position: relative;
+    cursor: pointer;
+    text-transform: uppercase;
+    z-index: 10;
+    
+    &.active {
+        z-index: 10;
+        font-weight: 600;
+        color: var(--bs-green);
+    }
+
+    &.inactive {
+        font-weight: 600;
+        color: var(--bs-red);
+    }
+}

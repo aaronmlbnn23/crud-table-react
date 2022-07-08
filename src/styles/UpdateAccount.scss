@@ -1,0 +1,7 @@
+.updateButton {
+    margin-top: 14px;
+
+    &:disabled {
+        background-color: var(--bs-gray-300);
+    }
+}

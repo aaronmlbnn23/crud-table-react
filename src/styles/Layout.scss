@@ -1,0 +1,38 @@
+main {
+    position: relative;
+    height: 100vh;
+    margin-left: var(--sidebar-w);
+    width: calc(100% - var(--sidebar-w));
+    background-color: var(--bs-light);
+    transition: all 0.3s ease-in-out;
+
+    @media (max-width: 80em){
+        margin-left: 0;
+        width: 100%;
+    }
+    
+}
+
+aside.collapse~main{
+    margin-left: 0;
+    width: 100%;
+
+    @media (max-width: 80em){
+        margin-right: var(--sidebar-w);
+        width: calc(100% - var(--sidebar-w));
+    }
+
+}
+
+aside.mobile~main{
+    margin-left: 0;
+    width: 100%;
+  
+}
+aside.mobile.active~main{
+    margin-left: var(--sidebar-w);
+    width: calc(100% - var(--sidebar-w));
+    background-color: var(--bs-light);
+    transition: all 0.3s ease-in-out;
+}
+
