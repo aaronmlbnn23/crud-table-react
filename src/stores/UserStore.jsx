@@ -1,14 +1,16 @@
 import create from 'zustand'
 import { useNavigate } from 'react-router';
 import axios from 'axios';
+import { Navigate } from 'react-router-dom'
+import { login, accounts, accessToken, updateStatus, deleteAccount, updateAccount } from '../Utilities/Utilities'
 
 export const userStore = create((set, get) => ({
   user: [],
-  accounts:[],
+  accounts: [],
   accountsToEdit: [],
 
   setAccountsToEdit: async (user) => {
-      set({accountsToEdit: user})
+    set({ accountsToEdit: user })
   },
 
   getUser: async () => {
@@ -17,10 +19,11 @@ export const userStore = create((set, get) => ({
       const data = JSON.parse(userdata)
       set({ user: data })
     }
-    return
   },
 
- 
+
+
+
   logout: async () => {
     const user = get().user;
     const headers = {
@@ -32,11 +35,11 @@ export const userStore = create((set, get) => ({
         headers: headers
       }).then((response) => {
         console.log(response)
-        set((state)=> ({
+        set((state) => ({
           user: []
-       }))
-      
-      }).finally(()=> {
+        }))
+
+      }).finally(() => {
         localStorage.removeItem('user')
       }).catch((error) => {
         console.log(error)
@@ -48,86 +51,49 @@ export const userStore = create((set, get) => ({
   },
 
   fetchAccounts: async () => {
-    const user = get().user;
-    const headers = {
-      'content-type': 'application/json',
-      Authorization: `Bearer ${user.token}`,
-    }
-    try {
-      axios.get('http://localhost:8000/api/accounts', {
-        headers: headers
-      }).then((response)=> {
+    if (!accessToken) return
+
+    accounts().then(
+      (response) => {
         const data = response.data
-        set(({accounts: data}))
-      }).finally(()=>{
-        const accounts = get().accounts
-
-      })
-    } catch (err) {
-
-    }
-  },
+        set(({ accounts: data }))
+      },
+      (error) => {
+        console.log(error)
+      }
+    )
+},
 
   updateAccountStatus: async (id) => {
-    const user = get().user;
     const fetch = get().fetchAccounts
-    const headers = {
-      'content-type': 'application/json',
-      Authorization: `Bearer ${user.token}`,
-    }
-    try {
-      axios.put(`http://localhost:8000/api/update-status/${id}`, {
-        headers: headers
-      }).then((response)=> {
+      updateStatus(id).then((response) => {
         const data = response.data
         console.log(data)
-      }).finally(()=>{
+      }).finally(() => {
         fetch()
       })
-    } catch (err) {
-    }
+   
   },
 
   deleteAccount: async (id) => {
-    const user = get().user;
     const fetch = get().fetchAccounts
-    const headers = {
-      'content-type': 'application/json',
-      Authorization: `Bearer ${user.token}`,
-    }
-    try {
-      axios.delete(`http://localhost:8000/api/delete/${id}`, {
-        headers: headers
-      }).then((response)=> {
+      deleteAccount(id).then((response) => {
         const data = response.data
         console.log(data)
-      }).finally(()=>{
+      }).finally(() => {
         fetch()
       })
-    } catch (err) {
-    }  
-  }, 
+  },
 
   updateAccount: async (id, data) => {
-    const user = get().user;
     const fetch = get().fetchAccounts
-    const headers = {
-      'content-type': 'application/json',
-      Authorization: `Bearer ${user.token}`,
-    }
-    
-    try {
-      axios.put(`http://localhost:8000/api/update-account/${id}`, data, {
-        headers: headers
-      }).then((response)=> {
+    updateAccount(id, data).then((response) => {
         const data = response.data
         console.log(data)
-      }).finally(()=>{
+      }).finally(() => {
         fetch()
       })
-    } catch (err) {
-    } 
-  }
-  
+    }
+
 
 }))

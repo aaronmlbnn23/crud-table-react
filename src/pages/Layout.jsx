@@ -10,7 +10,7 @@ const Layout = () => {
     return (
         <>  
             <Sidebar/>
-            <main>
+            <main className='main-admin'>
             <Navbar />
             <Outlet/>
             </main>

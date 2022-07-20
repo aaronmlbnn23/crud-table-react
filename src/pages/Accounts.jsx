@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useMemo } from 'react'
 import { userStore } from '../stores/UserStore'
 import Box from '@mui/material/Box';
 import Table from '@mui/material/Table';
@@ -56,9 +56,9 @@ function stableSort(array, comparator) {
 
 
 const Accounts = () => {
-  useEffect(() => {
-    fetchAccounts()
-  }, [])
+ 
+
+  
 
   const [order, setOrder] = useState('asc');
   const [orderby, setorderby] = useState('name');
@@ -76,6 +76,11 @@ const Accounts = () => {
   const [isDeleteModalOPen, setDeleteModal] = useState(false);
   const [toDelete, setToDelete] = useState();
   const updateAccount = userStore((state) => state.updateAccount)
+
+  useEffect(() => {
+    fetchAccounts()
+  }, [])
+
   const handleRequestSort = (event, property) => {
     const isAsc = orderby === property && order === 'asc';
     setOrder(isAsc ? 'desc' : 'asc');

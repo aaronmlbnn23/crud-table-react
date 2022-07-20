@@ -1,36 +1,63 @@
 import { Navigate, Route, Routes, useNavigate, useLocation } from "react-router-dom";
-
-import Home from "./pages/Home";
 import ProtectedRoutes from "./ProtectedRoutes";
-import Login from './pages/Login'
-import Dashboard from './pages/Dashboard'
-import NotFound from './pages/NotFound404'
-import { useEffect, useState, useContext } from "react";
-import AuthContext from "./contexts/AuthProvider";
-import Register from "./pages/Register";
-import LandingPage from "./pages/LandingPage";
-import Navbar from './components/navbar'
-import Profile from "./pages/Profile";
-import Layout from './pages/Layout'
-import Accounts from "./pages/Accounts";
+import { userStore } from "./stores/UserStore";
+import { LandingPage, Dashboard, Login, Register, Home, Profile, Accounts, NotFound, Layout, Applications } from './pages';
+import { TP_dashboard, TP_layout, TP_property, TP_signup, TP_application } from './tax-payer-side/taxpayer-pages'
+import { useState, useEffect } from 'react'
+import { accessToken, userData } from "./Utilities/Utilities";
+
 
 const Views = () => {
+const getUserData = userStore((state) => state.getUser)
+const user = userStore((state) => state.user)
+  const navigate = useNavigate()
+  const currentLocation = useLocation();
+  
+
+  useEffect(() => {
+    if (!accessToken) return;
+      getUserData()
+      navigate(currentLocation.pathname)
+  }, [])
 
   return (
 
     <Routes>
-      <Route path='*' element={<NotFound />} />
+
       <Route path="/" element={<LandingPage />} />
-      <Route path='/login' element={<Login /> } />
+      <Route path='/login' element={<Login />} />
       <Route path='/register' element={<Register />} />
-      <Route element={<ProtectedRoutes />}>
-        <Route path="/" element={<Layout/>}>
-         <Route path="home" element={<Home />} />
-        <Route path='profile' element={<Profile />} />
-        <Route path='dashboard' element={<Dashboard />} />
-        <Route path='accounts' element={<Accounts />} />
-      </Route>  
-      </Route>
+      <Route path='/sign-up' element={<TP_signup />} />
+
+
+
+ 
+        {user && user.role == 'admin' || user.role == 'user' ?
+          <Route element={<ProtectedRoutes />}>
+            <Route path='*' element={<NotFound />} />
+            <Route path="/" element={<Layout />}>
+              <Route path="/home" element={<Home />} />
+              <Route path='/profile' element={<Profile />} />
+              <Route path='/dashboard' element={<Dashboard />} />
+              <Route path='/accounts' element={<Accounts />} />
+              <Route path='/applications' element={<Applications />} />
+            </Route>
+          </Route> :
+          <Route element={<ProtectedRoutes />}>
+            <Route path='*' element={<NotFound />}/>
+            <Route path="/" element={<TP_layout />}>
+              <Route path="/property" element={<TP_property />} />
+              <Route path="/apply-property" element={<TP_application />} />
+              <Route path="/dashboard" element={<TP_dashboard />} />
+            </Route>
+          </Route>
+        }
+  
+
+
+
+
+
     </Routes>
   );
 };

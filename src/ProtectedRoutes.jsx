@@ -1,7 +1,7 @@
 
 import { useLocation } from "react-router-dom";
 import { Navigate, Outlet } from "react-router-dom";
-
+import { userStore } from "./stores/UserStore";
 
 
 const ProtectedRoutes = () => {

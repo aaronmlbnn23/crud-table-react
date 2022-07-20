@@ -9,14 +9,11 @@ import { Link, NavLink,} from 'react-router-dom'
 import { useNavigate  } from 'react-router'
 const navbar = () => {
 
-  useEffect(() => {
-    getUser()
-  }, [])
-  const getUser = userStore((state) => state.getUser)
   const logoutUser = userStore((state) => state.logout)
   const [collapse, setCollapse] = useState(false)
   const user = userStore((state) => state.user)
   const navigate = useNavigate();
+
  
   const toggleSidebar = () => {
     const sidebar = document.querySelector("aside")
@@ -27,12 +24,9 @@ const navbar = () => {
     const dropdown = document.querySelector('.dropdown')
     dropdown?.classList?.toggle('active') 
   }
-  const logout = () => {
-    logoutUser().then(() => {
-      setTimeout(() => {
-        navigate('/login')
-      }, 2000);
-    })
+  const logout = async () => {
+    await logoutUser();
+    navigate('/login')
   }
 
   return (

@@ -1,7 +1,7 @@
 :root {
     --bs-blue: #0d6efd;
     --bs-indigo: #6610f2;
-   
+    --bs-indigo-hover: #5a08dd;
     --bs-purple: #6f42c1;
     --bs-pink: #d63384;
     --bs-red: #dc3545;
@@ -79,16 +79,16 @@
     --navbar-h: 72px;
 
     --search-padding: 8px 16px;
-    --input-padding: 6px 10px;
+    --input-padding: 10px 10px;
 
-    @media(max-width: 80em) {
+    @media screen and (max-width: 768px) {
         --fs-xxs: 8px;
         --fs-xs: 10px;
         --fs-sm: 12px;
         --fs-md: 14px;
         --fs-lg: 16px;
         --fs-xl: 18px;
-        --fs-xx: 20px;
+        --fs-xxl: 20px;
     }
 }
 
@@ -110,11 +110,12 @@ body {
     font-weight: 500
 }
 
-input[type=text], input[type=password], input[type=email], select {
+input[type=text], input[type=password], input[type=email], input[type=number], select {
     border: 1px solid var(--bs-gray-200);
     border-radius: 6px;
     outline: none;
     padding: var(--input-padding);
+    font-size: var(--fs-sm);
 
     &:focus {
         transition: all 0.2s ease-in;
@@ -143,4 +144,7 @@ button {
 @import './Accounts.scss';
 @import './Toolbar.scss';
 @import './Register.scss';
-@import './UpdateAccount.scss'
+@import './UpdateAccount.scss';
+@import '../tax-payer-side/taxpayer-styles/taxpayerGlobal.scss';
+@import './Login.scss';
+@import './Applications.scss'

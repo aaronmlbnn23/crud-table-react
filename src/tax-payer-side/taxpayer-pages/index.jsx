@@ -1,0 +1,5 @@
+export { default as TP_dashboard} from './TP_dashboard'
+export { default as TP_property} from './TP_property'
+export { default as TP_layout } from './TP_layout'
+export { default as TP_signup} from './TP_signup'
+export {default as TP_application} from './TP_application'

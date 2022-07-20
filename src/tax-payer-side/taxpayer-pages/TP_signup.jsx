@@ -3,7 +3,7 @@ import React from 'react'
 import { useRef } from 'react'
 import { useForm } from "react-hook-form";
 
-const Register = (props) => {
+const TP_signup = (props) => {
     const { register, formState: { errors }, handleSubmit, watch } = useForm();
  
     const { handleClose} = props;
@@ -11,7 +11,7 @@ const Register = (props) => {
     password.current = watch("password", "");
     const onSubmit = async (data) => {
         try {
-            axios.post('http://localhost:8000/api/register', data, {
+            axios.post('http://localhost:8000/api/sign-up', data, {
                 headers: {
                     'content-type': 'application/json'
                 }
@@ -22,7 +22,7 @@ const Register = (props) => {
         } catch (err) {
             console.log(`error ${err}`)
         }
- 
+
     }
     return (
         <form onSubmit={handleSubmit(onSubmit)}>
@@ -45,15 +45,7 @@ const Register = (props) => {
                 />
 
             </div>
-            <div className='formGroup'>
-                <label htmlFor="role" data-required={errors.role?.type == "required" ? '*Required' : ''}>Role</label>
-                <select className='role' {...register("role", { required: true })}>
-                    <option value=''>Select Role</option>
-                    <option value='Admin'>Admin</option>
-                    <option value='Member'>Member</option>
-                </select>
-
-            </div>
+            
             <div className='footerButtons'>
             <button className="closeButton" type='button' onClick={handleClose}>Close</button>
             <button className="registerButton" type='submit'>Register</button>
@@ -63,4 +55,4 @@ const Register = (props) => {
     )
 }
 
-export default Register
+export default TP_signup

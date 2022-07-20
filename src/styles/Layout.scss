@@ -1,4 +1,4 @@
-main {
+.main-admin {
     position: relative;
     height: 100vh;
     margin-left: var(--sidebar-w);
@@ -6,30 +6,30 @@ main {
     background-color: var(--bs-light);
     transition: all 0.3s ease-in-out;
 
-    @media (max-width: 80em){
-        margin-left: 0;
+    @media screen and (max-width: 768px){
+        margin-left: 0 !important;
         width: 100%;
     }
     
 }
 
-aside.collapse~main{
+.aside-admin.collapse~.main-admin{
     margin-left: 0;
     width: 100%;
 
-    @media (max-width: 80em){
+    @media screen and (max-width: 768px){
         margin-right: var(--sidebar-w);
         width: calc(100% - var(--sidebar-w));
     }
 
 }
 
-aside.mobile~main{
+.aside-admin.mobile~.main-admin{
     margin-left: 0;
     width: 100%;
   
 }
-aside.mobile.active~main{
+.aside-admin.mobile.active~.main-admin{
     margin-left: var(--sidebar-w);
     width: calc(100% - var(--sidebar-w));
     background-color: var(--bs-light);
