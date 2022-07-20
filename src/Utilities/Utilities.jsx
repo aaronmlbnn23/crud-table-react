@@ -2,11 +2,10 @@ import axios from 'axios'
 import { userStore } from '../stores/UserStore'
 
 
-
 const user = JSON.parse(window.localStorage.getItem('user'))
 const getAccessToken = () => {
-    if(!user || undefined)  return false
-    return user.token
+    if(user && user !== undefined)   return user.token 
+    return false
 }
 
 const getAllUserData = () => {
@@ -16,7 +15,6 @@ const getAllUserData = () => {
 
 export const userData = getAllUserData();
 export const accessToken = getAccessToken();
-
 
 
 axios.defaults.baseURL = 'http://localhost:8000/api';
@@ -30,6 +28,10 @@ export const accounts = () => axios.get('/accounts');
 export const updateStatus = (id) => axios.put(`/update-status/${id}`) 
 export const deleteAccount = (id) => axios.delete(`/delete-account/${id}`)
 export const updateAccount = (id, data) => axios.put(`/update-account/${id}`, data)
+
+
+//Property Utilities
+export const getApplications = () => axios.get('/applications')
 
 
 //higher order function to catch errors

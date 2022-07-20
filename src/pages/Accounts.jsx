@@ -10,8 +10,8 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
-import EnhancedTableHead from '../components/table-head'
-import TableToolbar from '../components/table-toolbar'
+import EnhancedTableHead from '../components/user-table-components/table-head'
+import TableToolbar from '../components/user-table-components/table-toolbar'
 import AddModal from '../components/addModal';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
@@ -76,10 +76,16 @@ const Accounts = () => {
   const [isDeleteModalOPen, setDeleteModal] = useState(false);
   const [toDelete, setToDelete] = useState();
   const updateAccount = userStore((state) => state.updateAccount)
-
+  const token = userStore((state) => state.user)
+  const getUser = userStore((state) => state.getUser)
+  useEffect(() => {
+    getUser()
+  }, [])
   useEffect(() => {
     fetchAccounts()
   }, [])
+
+
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderby === property && order === 'asc';
@@ -105,6 +111,8 @@ const Accounts = () => {
   const emptyRows =
     page > 0 ? Math.max(0, (1 + page) * rowsPerPage - users.length) : 0;
 
+
+    
   const toggleAccountStatus = (id) => {
     const accountStatus = document.getElementById(`${id}`);
     accountStatus.classList.toggle('active')

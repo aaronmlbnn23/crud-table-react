@@ -23,9 +23,6 @@ const Login = () => {
 
 
   useEffect(() => {
-    getUser()
-  }, [])
-  useEffect(() => {
     if (!userdata) return
     if (userdata) {
       navigate('/dashboard')

@@ -1,17 +1,18 @@
+import axios from "axios";
 import create from "zustand";
+import { getApplications, accessToken } from "../Utilities/Utilities";
+import { userStore } from "./UserStore";
 
-export const useProperty = create((set, get) => ({
-    selectedCoordinates: '',
-    applications: [],
-
-    setSelectedCoordinate: (data) => {
-        set({selectedCoordinates: data})
-    },
+export const propertyStore = create((set, get) => ({
+  selectedCoordinates: '',
+  
 
 
-    getApplications: async () => {
-        
-    },
+  setSelectedCoordinate: (data) => {
+    set({ selectedCoordinates: data })
+  },
 
+
+ 
 
 })) 

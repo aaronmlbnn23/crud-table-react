@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import Map from '../taxpayer-components/map'
 import ApplyForm from '../taxpayer-components/applyForm'
-import { useProperty } from '../../stores/PropertyStore'
+
 
 const TP_application = () => {
 

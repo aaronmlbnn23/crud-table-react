@@ -1,11 +1,11 @@
 import React, { useRef, useEffect, useState } from 'react'
-import { useProperty  } from '../../stores/PropertyStore'
+import { propertyStore  } from '../../stores/PropertyStore'
 import { useLocation } from 'react-router-dom'
 
 const map = ({ }) => {
   const mapRef = useRef()
   const location = useLocation()
-  const selectCoordinate = useProperty((state) => state.setSelectedCoordinate)
+  const selectCoordinate = propertyStore((state) => state.setSelectedCoordinate)
 
 
   useEffect(() => {

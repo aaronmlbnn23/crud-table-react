@@ -4,20 +4,25 @@ import axios from 'axios';
 import { Navigate } from 'react-router-dom'
 import { login, accounts, accessToken, updateStatus, deleteAccount, updateAccount } from '../Utilities/Utilities'
 
+
+
 export const userStore = create((set, get) => ({
   user: [],
   accounts: [],
   accountsToEdit: [],
-
+  token: '',
+  applications: [],
+  
   setAccountsToEdit: async (user) => {
     set({ accountsToEdit: user })
   },
+
 
   getUser: async () => {
     const userdata = localStorage.getItem('user');
     if (userdata) {
       const data = JSON.parse(userdata)
-      set({ user: data })
+      set({ user: data, token: data.token })
     }
   },
 
@@ -51,9 +56,13 @@ export const userStore = create((set, get) => ({
   },
 
   fetchAccounts: async () => {
-    if (!accessToken) return
-
-    accounts().then(
+    const user = await get().user
+    const headers = {
+      Authorization: `Bearer ${user.token}`,
+      'content-type': 'application/json'
+    }
+    
+    axios.get('/accounts', {headers: headers}).then(
       (response) => {
         const data = response.data
         set(({ accounts: data }))
@@ -63,6 +72,27 @@ export const userStore = create((set, get) => ({
       }
     )
 },
+
+fetchApplications: async () => {
+  const user = await get().user
+  console.log(user)
+  const headers = {
+    Authorization: `Bearer ${user.token}`,
+    'content-type': 'application/json'
+  }
+
+  axios.get('/applications', { headers: headers }).then(
+    (response) => {
+      const data = response.data
+      set(({ applications: data }))
+      console.log(response.data)
+    },
+    (error) => {
+      console.log(error)
+    }
+  )
+},
+
 
   updateAccountStatus: async (id) => {
     const fetch = get().fetchAccounts

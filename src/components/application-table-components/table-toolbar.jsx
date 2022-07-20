@@ -8,7 +8,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import { useState } from 'react';
 import { set } from 'react-hook-form';
-import { userStore } from '../stores/UserStore';
+import { userStore } from '../../stores/UserStore';
 import { BiSearch } from 'react-icons/bi'
 
 const TableToolbar = (props) => {
@@ -25,11 +25,10 @@ const TableToolbar = (props) => {
         id="tableTitle"
         component="div"
       >
-        Manage Accounts
+        Manage Applications
       </Typography>
 
       <div className="right-toolbar">
-        <button type="button" className='addButton' onClick={openModal}>Add Account</button>
         <div className='search-wrapper'>
           <input type='text' className='search' onChange={handleSearch} placeholder='Search' />
           <BiSearch className='search-icon' />
