@@ -204,7 +204,7 @@ const Accounts = () => {
                       <TableRow key={user.id}>
 
                         <TableCell align='center' style={{ fontWeight: '600' }} >{user.id}</TableCell>
-                        <TableCell align="right">{user.name}</TableCell>
+                        <TableCell align="center">{user.name}</TableCell>
                         <TableCell align="center">{user.email}</TableCell>
                         <TableCell align="center">{user.role}</TableCell>
                         <TableCell align="center" className={`status ${user.status === 'active' ? 'active' : 'inactive'}`}>

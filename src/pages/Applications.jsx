@@ -65,23 +65,26 @@ const Applications = () => {
     const [querySearch, setQuerySearch] = useState('')
     const getUser = userStore((state) => state.getUser)
     const token = userStore((state) => state.token)
-   
+    const [filteredData, setFilteredData] = useState('pending')
 
     const handleSearch = (e) => {
         setQuerySearch(e.target.value)
+    }
+    const filterApplications = (e) => {
+        setFilteredData(e.target.value)
+        console.log(e.target.value)
     }
 
     useEffect(() => {
         getUser()
     }, [])
 
-    console.log(token)
     useEffect(() => {
         fetchApplications()
     }, [])
 
 
-   
+
     const handleRequestSort = (event, property) => {
         const isAsc = orderby === property && order === 'asc';
         setOrder(isAsc ? 'desc' : 'asc');
@@ -112,6 +115,7 @@ const Applications = () => {
                 <Paper sx={{ width: '100%', mb: 2 }}>
                     <TableToolbar
                         handleSearch={handleSearch}
+                        filterApplications={filterApplications}
 
 
                     />
@@ -133,9 +137,14 @@ const Applications = () => {
                  rows.slice().sort(getComparator(order, orderby)) */}
                                 {applications && stableSort(applications, getComparator(order, orderby))
                                     .filter((app) => {
+
                                         if (querySearch === '') {
                                             return app
                                         } else if (app.tdId.toLowerCase().includes(querySearch.toLowerCase()) || app.name.toLowerCase().includes(querySearch.toLowerCase())) {
+                                            return app
+                                        }
+                                    }).filter((app) => {
+                                        if (filteredData === app.status) {
                                             return app
                                         }
                                     })
@@ -146,7 +155,7 @@ const Applications = () => {
                                             <TableRow key={app.id}>
 
                                                 <TableCell align='center' style={{ fontWeight: '600' }} >{app.tdId}</TableCell>
-                                                <TableCell align="right">{app.name}</TableCell>
+                                                <TableCell align="center">{app.name}</TableCell>
                                                 <TableCell align="center">{app.address}</TableCell>
                                                 <TableCell align="center">{app.classification}</TableCell>
                                                 <TableCell align="center">{app.assessedValue}</TableCell>

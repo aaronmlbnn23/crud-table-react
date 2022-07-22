@@ -4,11 +4,13 @@ import { userStore } from '../stores/UserStore'
 
 const user = JSON.parse(window.localStorage.getItem('user'))
 const getAccessToken = () => {
-    if(user && user !== undefined)   return user.token 
-    return false
+  const user = JSON.parse(window.localStorage.getItem('user'))
+  if(!user || undefined) return false 
+  return user.token
 }
 
 const getAllUserData = () => {
+  const user = JSON.parse(window.localStorage.getItem('user'))
     if(!user || undefined) return false 
     return user
 }

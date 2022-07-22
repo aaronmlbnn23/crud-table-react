@@ -12,7 +12,8 @@ export const userStore = create((set, get) => ({
   accountsToEdit: [],
   token: '',
   applications: [],
-  
+  application:[],
+
   setAccountsToEdit: async (user) => {
     set({ accountsToEdit: user })
   },
@@ -61,8 +62,8 @@ export const userStore = create((set, get) => ({
       Authorization: `Bearer ${user.token}`,
       'content-type': 'application/json'
     }
-    
-    axios.get('/accounts', {headers: headers}).then(
+
+    axios.get('/accounts', { headers: headers }).then(
       (response) => {
         const data = response.data
         set(({ accounts: data }))
@@ -71,59 +72,94 @@ export const userStore = create((set, get) => ({
         console.log(error)
       }
     )
-},
+  },
 
-fetchApplications: async () => {
-  const user = await get().user
-  console.log(user)
-  const headers = {
-    Authorization: `Bearer ${user.token}`,
-    'content-type': 'application/json'
-  }
-
-  axios.get('/applications', { headers: headers }).then(
-    (response) => {
-      const data = response.data
-      set(({ applications: data }))
-      console.log(response.data)
-    },
-    (error) => {
-      console.log(error)
+  fetchApplications: async () => {
+    const user = await get().user
+    const headers = {
+      Authorization: `Bearer ${user.token}`,
+      'content-type': 'application/json'
     }
-  )
-},
+
+    axios.get('/applications', { headers: headers }).then(
+      (response) => {
+        const data = response.data
+        set(({ applications: data }))
+        console.log(response.data)
+      },
+      (error) => {
+        console.log(error)
+      }
+    )
+  },
+
+  fetchApplication: async (id) => {
+    const user = await get().user
+    const headers = {
+      Authorization: `Bearer ${user.token}`,
+      'content-type': 'application/json'
+    }
+
+    axios.get(`/application/${id}`, { headers: headers }).then(
+      (response) => {
+        const data = response.data
+        set(({ application: data }))
+        console.log(response.data)
+        
+      },
+      (error) => {
+        console.log(error)
+      }
+    )
+  },
 
 
   updateAccountStatus: async (id) => {
     const fetch = get().fetchAccounts
-      updateStatus(id).then((response) => {
-        const data = response.data
-        console.log(data)
-      }).finally(() => {
-        fetch()
-      })
-   
+    const user = await get().user
+    const headers = {
+      Authorization: `Bearer ${user.token}`,
+      'content-type': 'application/json'
+    }
+    axios.put(`/update-status/${id}`, { headers: headers }).then((response) => {
+      const data = response.data
+      console.log(data)
+    }).finally(() => {
+      fetch()
+    })
+
   },
 
   deleteAccount: async (id) => {
     const fetch = get().fetchAccounts
-      deleteAccount(id).then((response) => {
-        const data = response.data
-        console.log(data)
-      }).finally(() => {
-        fetch()
-      })
+    const user = await get().user
+    const headers = {
+      Authorization: `Bearer ${user.token}`,
+      'content-type': 'application/json'
+    }
+    axios.delete(`/delete-account/${id}`, { headers: headers }).then((response) => {
+      const data = response.data
+      console.log(data)
+    }).finally(() => {
+      fetch()
+    })
   },
 
   updateAccount: async (id, data) => {
     const fetch = get().fetchAccounts
-    updateAccount(id, data).then((response) => {
-        const data = response.data
-        console.log(data)
-      }).finally(() => {
-        fetch()
-      })
+    const user = await get().user
+    const headers = {
+      Authorization: `Bearer ${user.token}`,
+      'content-type': 'application/json'
     }
+
+    axios.put(`/update-account/${id}`, data, { headers: headers }).then((response) => {
+      const data = response.data
+      console.log(data)
+    }).finally(() => {
+      fetch()
+    })
+  }
 
 
 }))

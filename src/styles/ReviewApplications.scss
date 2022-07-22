@@ -1,0 +1,44 @@
+.review-application-wrapper {
+    height: calc(100vh - var(--nav-tp));
+    padding: 20px;
+    display: flex;
+    overflow: hidden;
+
+
+    .review-container {
+        position: relative;
+        height: 100%;
+        padding: 20px;
+        background-color: var(--bs-gray-200);
+        width: 350px;
+        flex-grow: 1;
+        flex-shrink: 0;
+
+
+        .review-items {
+            display: flex;
+            flex-direction: column;
+
+        }
+
+      
+    }
+    .__map-wrapper {
+        position: relative;
+        width: 100%;
+        height: calc(100vh - var(--nav-tp))
+    }
+
+    
+}
+
+
+.approveBtn {
+    margin-top: 20px;
+    display: block;
+    width: 100%;
+    transition: all 0.3s ease-in-out;
+    &:hover {
+        background-color: var(--bs-indigo-hover);
+    }
+}

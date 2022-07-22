@@ -12,7 +12,7 @@ import { userStore } from '../../stores/UserStore';
 import { BiSearch } from 'react-icons/bi'
 
 const TableToolbar = (props) => {
-  const { handleSearch, openModal } = props;
+  const { handleSearch, openModal, filterApplications } = props;
 
   return (
     <Toolbar
@@ -28,7 +28,12 @@ const TableToolbar = (props) => {
         Manage Applications
       </Typography>
 
-      <div className="right-toolbar">
+      <div className="right-toolbar" >
+        <select className='application-filter'  onChange={filterApplications}>
+          <option value="pending">Pending</option>
+          <option value="approved">Approved</option>
+          <option value="rejected">Rejected</option>
+        </select>
         <div className='search-wrapper'>
           <input type='text' className='search' onChange={handleSearch} placeholder='Search' />
           <BiSearch className='search-icon' />

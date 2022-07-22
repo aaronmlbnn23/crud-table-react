@@ -29,7 +29,8 @@ const applyForm = () => {
 
 
     useEffect(() => {
-        setValue('ownerId', user.id)
+        setValue('coordinates', '')
+        setValue('applicantId', user.id)
         setValue('status', 'pending')
     }, [user])
 
@@ -39,7 +40,7 @@ const applyForm = () => {
 
         const submitData = {
             tdId: data.tdId,
-            ownerId: data.ownerId,
+            applicantId: data.applicantId,
             name: data.ownername,
             address: data.address,
             assessedValue: data.assessedValue,
@@ -66,8 +67,8 @@ const applyForm = () => {
     }
     return (
         <form onSubmit={handleSubmit(submitForm)} className='applyForm'>
-            <input type="text" name='ownerId' {...register("ownerId", { required: true })} />
-            <input type="text" name='status' {...register("status", { required: true })} />
+            <input type="hidden" name='applicantId' {...register("applicantId", { required: true })} />
+            <input type="hidden" name='status' {...register("status", { required: true })} />
             <div className='formGroup'>
 
                 <label htmlFor="tdId" data-required={errors.tdId?.type == 'required' ? "*Required" : ''}>Tax declaration number</label>
@@ -100,7 +101,7 @@ const applyForm = () => {
             </div>
             <div className='formGroup'>
                 <label htmlFor="coordinates" data-required={errors.coordinates?.type === 'required' ? "*Required" : ''}>Coordinates</label>
-                <input type="text" id='coordinates' className="coordinates" name='coordinates' defaultValue='' {...register("coordinates", { required: true })} placeholder='Coordinates' autoComplete="off" />
+                <input type="text" id='coordinates' disabled={true} className="coordinates" name='coordinates' defaultValue='' {...register("coordinates", { required: true })} placeholder='Click or tap the map' autoComplete="off" />
             </div>
             <div className='formGroup'>
                 <label data-required={errors.image?.type === 'required' ? "*Required" : ''}>Upload a photo of last payment</label>
