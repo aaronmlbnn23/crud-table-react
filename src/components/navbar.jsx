@@ -5,26 +5,28 @@ import { AiOutlineMenuFold, AiOutlineMenuUnfold } from 'react-icons/ai'
 import { MdOutlineNotifications } from 'react-icons/md'
 import { userStore } from '../stores/UserStore';
 import Profile from '../assets/images/Me2.png'
-import { Link, NavLink,} from 'react-router-dom'
-import { useNavigate  } from 'react-router'
+import { Link, NavLink, } from 'react-router-dom'
+import { useNavigate } from 'react-router'
 const navbar = () => {
 
   const logoutUser = userStore((state) => state.logout)
   const [collapse, setCollapse] = useState(false)
   const user = userStore((state) => state.user)
   const navigate = useNavigate();
+  const [dropdown, setDropdown] = useState(false)
+  const loading = userStore((state) => state.loading)
+  const navItems = document.querySelector('.nav-items')
 
- 
   const toggleSidebar = () => {
     const sidebar = document.querySelector("aside")
     sidebar.classList.toggle("collapse");
     setCollapse(collapse => !collapse)
   }
   const toggleDropdown = () => {
-    const dropdown = document.querySelector('.dropdown')
-    dropdown?.classList?.toggle('active') 
+    setDropdown(current => !current)
   }
   const logout = async () => {
+    navItems?.classList.remove('active')
     await logoutUser();
     navigate('/login')
   }
@@ -39,7 +41,7 @@ const navbar = () => {
 
             <img src={Profile} alt="user-icon" className='user-icon' onClick={toggleDropdown} />
           </div>
-          <div className='dropdown'>
+          <div className={`dropdown ${dropdown ? 'active' : ''}`}>
             <ul className='dropdown-items'>
 
               <li><Link className="profile-link" as={NavLink} to='./profile'>{user.name}</Link></li>

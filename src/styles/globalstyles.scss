@@ -2,6 +2,7 @@
     --bs-blue: #0d6efd;
     --bs-indigo: #6610f2;
     --bs-indigo-hover: #5a08dd;
+    --bs-indigo-light: rgb(151, 86, 255);
     --bs-purple: #6f42c1;
     --bs-pink: #d63384;
     --bs-red: #dc3545;
@@ -149,3 +150,4 @@ button {
 @import './Login.scss';
 @import './Applications.scss';
 @import './ReviewApplications.scss';
+@import './loader.scss'

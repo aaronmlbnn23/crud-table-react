@@ -23,6 +23,8 @@ import { propertyStore } from '../stores/PropertyStore'
 import { Link } from 'react-router-dom'
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import { userStore } from '../stores/UserStore'
+import Loader from '../components/loader'
+
 function descendingComparator(a, b, orderby) {
     if (b[orderby] < a[orderby]) {
         return -1;
@@ -66,6 +68,8 @@ const Applications = () => {
     const getUser = userStore((state) => state.getUser)
     const token = userStore((state) => state.token)
     const [filteredData, setFilteredData] = useState('pending')
+    const loading = userStore((state) => state.loading);
+
 
     const handleSearch = (e) => {
         setQuerySearch(e.target.value)
@@ -111,7 +115,7 @@ const Applications = () => {
 
     return (
         <div className='applications-wrapper'>
-            <Box sx={{ width: '100%' }}>
+            {!loading ? <Box sx={{ width: '100%' }}>
                 <Paper sx={{ width: '100%', mb: 2 }}>
                     <TableToolbar
                         handleSearch={handleSearch}
@@ -202,7 +206,9 @@ const Applications = () => {
                     control={<Switch checked={dense} onChange={handleChangeDense} />}
                     label="Dense padding"
                 />
-            </Box>
+            </Box> : <Loader/> }
+            
+            
 
 
         </div>

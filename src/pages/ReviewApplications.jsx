@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom'
 import { propertyStore } from '../stores/PropertyStore'
 import { userStore } from '../stores/UserStore'
 import Map from '../tax-payer-side/taxpayer-components/map'
-
+import Loader from '../components/loader'
 const ReviewApplications = () => {
   const { id } = useParams()
   const getApplication = userStore((state) => state.fetchApplication)
@@ -13,6 +13,7 @@ const ReviewApplications = () => {
   const approveApplication  = propertyStore((state) => state.approveApplication)
   const [token, setToken] = useState()
   const user = userStore((state) => state.user)
+  const loading = userStore((state) => state.loading)
   useEffect(() => {
     getUser()
     setToken(user.token)
@@ -32,7 +33,7 @@ const ReviewApplications = () => {
 
   return (
     <>
-      {application && <div className='review-application-wrapper'>
+      {application && !loading ? <div className='review-application-wrapper'>
 
         <div className='review-container'>
 
@@ -54,7 +55,7 @@ const ReviewApplications = () => {
         <div className='__map-wrapper'>
           <Map appCoords={application.coordinates} />
         </div>
-      </div>}
+      </div>: <Loader/>}
 
     </>
   )

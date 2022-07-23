@@ -4,7 +4,9 @@ import AuthContext from '../contexts/AuthProvider'
 import { useLocation, useNavigate, } from "react-router";
 import { userStore } from '../stores/UserStore';
 import { login, catchErrors } from '../Utilities/Utilities'
-import { useForm } from "react-hook-form";
+import { set, useForm } from "react-hook-form";
+
+import Loader from '../components/loader';
 const Login = () => {
 
   const [email, setEmail] = useState('')
@@ -20,8 +22,8 @@ const Login = () => {
   const getUser = userStore((state) => state.getUser)
   const user = userStore((state) => state.user)
   const { register, formState: { errors }, handleSubmit, watch } = useForm();
-
-
+  const loading = userStore((state) => state.loading)
+  const setLoading = userStore((state) => state.setLoading)
   useEffect(() => {
     if (!userdata) return
     if (userdata) {
@@ -29,7 +31,9 @@ const Login = () => {
     }
   }, [location, userdata])
 
-
+  useEffect(() => {
+    setLoading()
+  }, [])
 
   const onSubmit = async (data) => {
 
@@ -65,7 +69,7 @@ const Login = () => {
 
 return (
   <div className='login-page'>
-    <div className='login-wrapper'>
+    {!loading ? <div className='login-wrapper'>
       <h1>Login</h1>
       {errorMessage && errorMessage}
       <form onSubmit={handleSubmit(onSubmit)}>
@@ -85,7 +89,8 @@ return (
 
         </div>
       </form>
-    </div>
+    </div> : <Loader />}
+   
   </div>
 )
 }

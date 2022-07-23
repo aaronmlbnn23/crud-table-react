@@ -47,13 +47,15 @@ nav {
                 border-radius: 50%;
                 cursor: pointer;
             }
+
+
         }
 
         & .dropdown {
             position: relative;
             background-color: var(--bs-gray-200);
             display: none;
-
+           
             &.active {
                 display: block;
             }
@@ -77,9 +79,7 @@ nav {
 
 
                 & li {
-
                     cursor: pointer;
-
                     &:hover {
                         background-color: var(--bs-gray-300);
                     }

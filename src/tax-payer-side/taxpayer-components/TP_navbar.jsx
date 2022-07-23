@@ -26,32 +26,39 @@ const TP_navbar = () => {
             <div className='logo-wrapper'>
                 <h1>Logo</h1>
             </div>
-            <div className='__links-wrapper'>
+            <ul className='__links-wrapper'>
 
-                <Link className={`link ${splitLocation[1] === "dashboard" ? 'active' : ''}`} as={NavLink} to='/dashboard'>
+                <li className={`link ${splitLocation[1] === "dashboard" ? 'active' : ''}`} >
+                    <Link  as={NavLink} to='/dashboard'>
+                        Dashboard</Link>
+                </li>
+                <li className={`link ${splitLocation[1] === "property" ? 'active' : ''}`} >
+                    <Link as={NavLink} to='/property'>
+                        My Property
 
-                    Dashboard</Link>
-                <Link className={`link ${splitLocation[1] === "property" ? 'active' : ''}`} as={NavLink} to='/property'>
-                    My Property
+                    </Link>
+                </li >
 
-                </Link>
-                <Link className={`link ${splitLocation[1] === "apply-property" ? 'active' : ''}`} as={NavLink} to='/apply-property'>
-                    Application Form
+                <li className={`link ${splitLocation[1] === "apply-property" ? 'active' : ''}`} >
+                    <Link as={NavLink} to='/apply-property'>
+                        Application Form
 
-                </Link>
+                    </Link>
+                </li>
+
 
                 <button className='logoutBtn' onClick={logout}>Logout</button>
 
-               
 
-            </div>
+
+            </ul>
             <div className="hamburger" onClick={() => menu()}>
-                    <span className="bar"></span>
-                    <span className="bar"></span>
-                    <span className="bar"></span>
-                </div>
+                <span className="bar"></span>
+                <span className="bar"></span>
+                <span className="bar"></span>
+            </div>
         </nav>
-        
+
     )
 }
 

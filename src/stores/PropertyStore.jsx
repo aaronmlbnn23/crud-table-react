@@ -5,7 +5,8 @@ import { userStore } from "./UserStore";
 
 export const propertyStore = create((set, get) => ({
   selectedCoordinates: '',
-
+  loading: true,
+  myProperty: [],
 
 
   setSelectedCoordinate: (data) => {
@@ -19,14 +20,39 @@ export const propertyStore = create((set, get) => ({
       'content-type': 'application/json'
     }
     axios.put(`/approve-application/${data.tdId}`, data, { headers: headers })
-    .then((response) => {
-      const data = response.data
-      console.log(data)
-    }).finally(() => {
+      .then((response) => {
+        const data = response.data
+        console.log(data)
+      }).finally(() => {
 
-    })
+      })
 
   },
 
+  fetchMyProperty: async (id, token) => {
+
+    const headers = {
+      Authorization: `Bearer ${token}`,
+      'content-type': 'application/json'
+    }
+    try {
+      set((state) => ({ loading: true }))
+
+      axios.get(`/my-property/${id}`, { headers: headers }).then(
+        (response) => {
+          const data = response.data
+          set(({ myProperty: data }))
+          set((state) => ({ loading: false }))
+          console.log(response.data)
+        },
+        (error) => {
+          console.log(error)
+        }
+      )
+    } catch (error) {
+      console.log(error)
+    }
+
+  },
 
 })) 

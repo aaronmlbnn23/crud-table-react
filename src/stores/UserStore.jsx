@@ -12,12 +12,16 @@ export const userStore = create((set, get) => ({
   accountsToEdit: [],
   token: '',
   applications: [],
-  application:[],
+  application: [],
+  loading: true,
 
   setAccountsToEdit: async (user) => {
     set({ accountsToEdit: user })
   },
 
+  setLoading: () => {
+    set((state) => ({ loading: false }))
+  },
 
   getUser: async () => {
     const userdata = localStorage.getItem('user');
@@ -37,6 +41,7 @@ export const userStore = create((set, get) => ({
       Authorization: `Bearer ${user.token}`,
     }
     try {
+      set((state) => ({ loading: true }))
       axios.get('http://127.0.0.1:8000/api/logout', {
         headers: headers
       }).then((response) => {
@@ -44,6 +49,7 @@ export const userStore = create((set, get) => ({
         set((state) => ({
           user: []
         }))
+        set((state) => ({ loading: false }))
 
       }).finally(() => {
         localStorage.removeItem('user')
@@ -57,60 +63,83 @@ export const userStore = create((set, get) => ({
   },
 
   fetchAccounts: async () => {
+    const loading = await get().loading
     const user = await get().user
     const headers = {
       Authorization: `Bearer ${user.token}`,
       'content-type': 'application/json'
     }
+    try {
+      set((state) => ({ loading: true }))
+      console.log(loading)
+      axios.get('/accounts', { headers: headers }).then(
+        (response) => {
+          const data = response.data
+          set(({ accounts: data }))
+          set((state) => ({ loading: false }))
 
-    axios.get('/accounts', { headers: headers }).then(
-      (response) => {
-        const data = response.data
-        set(({ accounts: data }))
-      },
-      (error) => {
-        console.log(error)
-      }
-    )
+        },
+        (error) => {
+          console.log(error)
+        }
+      )
+    } catch (error) {
+      console.log(error)
+    }
+
   },
 
   fetchApplications: async () => {
+    const loader = await get().loading
     const user = await get().user
     const headers = {
       Authorization: `Bearer ${user.token}`,
       'content-type': 'application/json'
     }
+    try {
+      set((state) => ({ loading: true }))
 
-    axios.get('/applications', { headers: headers }).then(
-      (response) => {
-        const data = response.data
-        set(({ applications: data }))
-        console.log(response.data)
-      },
-      (error) => {
-        console.log(error)
-      }
-    )
+      axios.get('/applications', { headers: headers }).then(
+        (response) => {
+          const data = response.data
+          set(({ applications: data }))
+          set((state) => ({ loading: false }))
+          console.log(response.data)
+        },
+        (error) => {
+          console.log(error)
+        }
+      )
+    } catch (error) {
+      console.log(error)
+    }
+
   },
 
   fetchApplication: async (id) => {
+    const loading = await get().loading
     const user = await get().user
     const headers = {
       Authorization: `Bearer ${user.token}`,
       'content-type': 'application/json'
     }
+    try {
+      set((state) => ({loading: true}))
+      axios.get(`/application/${id}`, { headers: headers }).then(
+        (response) => {
+          const data = response.data
+          set(({ application: data }))
+          console.log(response.data)
+          set((state) => ({loading: false}))
+        },
+        (error) => {
+          console.log(error)
+        }
+      )
+    } catch (error) {
+      console.log(error)
+    }
 
-    axios.get(`/application/${id}`, { headers: headers }).then(
-      (response) => {
-        const data = response.data
-        set(({ application: data }))
-        console.log(response.data)
-        
-      },
-      (error) => {
-        console.log(error)
-      }
-    )
   },
 
 

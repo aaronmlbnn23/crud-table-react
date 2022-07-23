@@ -1,3 +1,6 @@
 .applications-wrapper {
     padding: 20px;
+    height: calc(100vh - var(--navbar-h));
+    width: 100%;
+    overflow: hidden;
 }

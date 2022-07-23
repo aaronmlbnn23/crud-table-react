@@ -20,7 +20,7 @@ import Tooltip from '@mui/material/Tooltip';
 import ConfirmModal from '../components/confirmModal';
 import EditModal from '../components/editModal'
 import UpdateAccount from '../components/UpdateAccount';
-
+import Loader from '../components/loader';
 
 function descendingComparator(a, b, orderby) {
   if (b[orderby] < a[orderby]) {
@@ -78,6 +78,8 @@ const Accounts = () => {
   const updateAccount = userStore((state) => state.updateAccount)
   const token = userStore((state) => state.user)
   const getUser = userStore((state) => state.getUser)
+  const loading = userStore((state) => state.loading)
+  console.log(loading)
   useEffect(() => {
     getUser()
   }, [])
@@ -166,6 +168,7 @@ const Accounts = () => {
       <ConfirmModal open={isDeleteModalOPen} handleClose={handleClose} onDelete={onDelete} />
       <AddModal open={isAddModalOpen} handleClose={handleClose} />
       <EditModal open={isEditModalOpen} handleClose={handleClose} onUpdate={onUpdate} />
+      {!loading ? 
       <Box sx={{ width: '100%' }}>
         <Paper sx={{ width: '100%', mb: 2 }}>
           <TableToolbar
@@ -254,7 +257,8 @@ const Accounts = () => {
           control={<Switch checked={dense} onChange={handleChangeDense} />}
           label="Dense padding"
         />
-      </Box>
+      </Box> : <Loader/>}
+     
     </div>
   )
 }
