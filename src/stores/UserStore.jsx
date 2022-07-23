@@ -33,7 +33,6 @@ export const userStore = create((set, get) => ({
 
 
 
-
   logout: async () => {
     const user = get().user;
     const headers = {

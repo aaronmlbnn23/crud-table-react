@@ -14,10 +14,20 @@
             margin: 0 auto;
             padding: 20px 0;
             padding: 20px;
+            display: flex;
+            justify-content: space-between;
            
 
             h1 {
                 color: var(--bs-light)
+            }
+
+            p {
+                color: var(--bs-gray-200);
+                cursor: pointer;
+            }
+            button {
+                display: block;
             }
         }
     }
@@ -70,12 +80,24 @@
 }
 .addNewPropertyBtn {
     padding: 6px 30px;
-    color: var(--bs-light);
-    background-color: var(--bs-indigo);
+    background-color: var(--bs-gray-300);
+    color: var(--bs-dark);
     text-decoration: none;
     border-radius: 6px;
+    transition: all 0.2s ease-in;
 
     &:hover {
-        background-color: var(--bs-indigo-hover);
+        background-color: var(--bs-gray-400);
     }
+}
+
+.link-to-apply {
+    text-decoration: none;
+    color: var(--bs-indigo);
+}
+.__link-to-apply {
+    text-align: center;
+    width: 100%;
+
+
 }

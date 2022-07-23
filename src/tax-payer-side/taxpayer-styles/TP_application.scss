@@ -1,8 +1,7 @@
 .__application-wrapper {
     position: relative;
     display: flex;
-    height: 100vh;
-    padding-top: var(--nav-tp);
+    height: calc(100vh - var(--nav-tp));
     overflow: hidden;
 
     h1 {

@@ -37,20 +37,19 @@ export const propertyStore = create((set, get) => ({
     }
     try {
       set((state) => ({ loading: true }))
-
       axios.get(`/my-property/${id}`, { headers: headers }).then(
         (response) => {
           const data = response.data
           set(({ myProperty: data }))
-          set((state) => ({ loading: false }))
+          
           console.log(response.data)
-        },
-        (error) => {
-          console.log(error)
         }
-      )
+      ).then(() => {
+        set((state) => ({ loading: false }))
+      })
     } catch (error) {
       console.log(error)
+      set((state) => ({ loading: false }))
     }
 
   },

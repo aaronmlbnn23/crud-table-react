@@ -23,7 +23,7 @@ const TP_Layout = () => {
             <Navbar />
             
             <main className='main-tp'>
-            <TP_menu />
+                 <TP_menu />
                 <Outlet />
             </main>
         </>

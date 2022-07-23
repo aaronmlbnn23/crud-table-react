@@ -31,7 +31,7 @@ const TP_navbar = () => {
                 <li className={`link ${splitLocation[1] === "dashboard" ? 'active' : ''}`} >
                     <Link  as={NavLink} to='/dashboard'>
                         Dashboard</Link>
-                </li>
+                </  li>
                 <li className={`link ${splitLocation[1] === "property" ? 'active' : ''}`} >
                     <Link as={NavLink} to='/property'>
                         My Property
@@ -48,8 +48,6 @@ const TP_navbar = () => {
 
 
                 <button className='logoutBtn' onClick={logout}>Logout</button>
-
-
 
             </ul>
             <div className="hamburger" onClick={() => menu()}>

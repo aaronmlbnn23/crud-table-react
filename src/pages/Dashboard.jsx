@@ -11,7 +11,7 @@ const Dashboard = () => {
 
   return (
     <>
-    {loading ? 
+    {!loading ? 
       <div className='dashboard-wrapper'>
       Dashboard
     </div>: <Loader/>

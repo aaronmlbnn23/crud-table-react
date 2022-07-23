@@ -61,7 +61,7 @@
 
 @media screen and (max-width: 768px) {
     .__links-wrapper {
-        display: none;
+        display: none !important;
     }
 
 
@@ -69,11 +69,11 @@
 
 
 .hamburger {
-    display: block;
+    display: block !important;
     z-index: 2;
 
     @media screen and (min-width: 768px) {
-        display: none;
+        display: none !important;
     }
 
     & .bar {
