@@ -6,15 +6,14 @@ export const appStore = create((set, get) => ({
   applications: [],
 
   sendingStatus: false,
-  sendingMessage: '',
+  sendingMessage: "",
 
   setSendingMessage: (message) => {
-    set({sendingMessage: message})
+    set({ sendingMessage: message });
   },
   setSendingStatus: (status) => {
-    set((state) => ({sendingStatus: status}))
+    set((state) => ({ sendingStatus: status }));
   },
-
 
   fetchApplication: async (id, token) => {
     const application = await get().application;
@@ -33,7 +32,7 @@ export const appStore = create((set, get) => ({
         })
         .then(() => {
           set((state) => ({ loading: false }));
-          console.log(loading);
+          //console.log(loading);
         });
     } catch (error) {
       console.log(error);
@@ -55,7 +54,7 @@ export const appStore = create((set, get) => ({
           const data = response.data;
           set({ applications: data });
           set((state) => ({ loading: false }));
-          console.log(response.data);
+          //console.log(response.data);
         },
         (error) => {
           console.log(error);
@@ -84,17 +83,49 @@ export const appStore = create((set, get) => ({
         }));
       })
       .finally(() => {
-        set((state) => ({sendingMessage: "Approved successfully."}))
-        set((state) => ({sendingStatus: 'sucsess'}))
+        set((state) => ({ sendingMessage: "Approved successfully." }));
+        set((state) => ({ sendingStatus: "sucsess" }));
 
         setTimeout(() => {
-            set((state) => ({
-                sendingMessage: ''
-            }))
-            set((state) => ({
-                sendingStatus: false
-            }))
-        }, 2500)
+          set((state) => ({
+            sendingMessage: "",
+          }));
+          set((state) => ({
+            sendingStatus: false,
+          }));
+        }, 2500);
+      });
+  },
+
+  rejectApplication: async (data, token) => {
+    const headers = {
+      Authorization: `Bearer ${token}`,
+      "content-type": "application/json",
+    };
+    axios
+      .put(`/reject-application/${data.tdId}`, data, { headers: headers })
+      .then((response) => {
+        const data = response.data;
+        console.log(data);
+        set((state) => ({
+          application: {
+            ...state.application,
+            status: data.status,
+          },
+        }));
+      })
+      .finally(() => {
+        set((state) => ({ sendingMessage: "Rejected successfully." }));
+        set((state) => ({ sendingStatus: "sucsess" }));
+
+        setTimeout(() => {
+          set((state) => ({
+            sendingMessage: "",
+          }));
+          set((state) => ({
+            sendingStatus: false,
+          }));
+        }, 2500);
       });
   },
 
@@ -116,17 +147,17 @@ export const appStore = create((set, get) => ({
         }));
       })
       .finally(() => {
-        set((state) => ({sendingMessage: "Reverted successfully."}))
-        set((state) => ({sendingStatus: 'sucsess'}))
+        set((state) => ({ sendingMessage: "Reverted successfully." }));
+        set((state) => ({ sendingStatus: "sucsess" }));
 
         setTimeout(() => {
-            set((state) => ({
-                sendingMessage: ''
-            }))
-            set((state) => ({
-                sendingStatus: false
-            }))
-        }, 2500)
+          set((state) => ({
+            sendingMessage: "",
+          }));
+          set((state) => ({
+            sendingStatus: false,
+          }));
+        }, 2500);
       });
   },
 }));

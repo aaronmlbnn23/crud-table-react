@@ -21,22 +21,39 @@ const ReviewApplications = () => {
   const [imageUrl, setImageUrl] = useState();
   const loading = appStore((state) => state.loading);
   const [isConfirmModalOpen, setModalOpen] = useState(false);
-  const [dataToApprove, setDataToApproved] = useState();
+  const [dataToApprove, setDataToApprovedOrReject] = useState();
   const sendingMessage = appStore((state) => state.sendingMessage);
   const sendingStatus = appStore((state) => state.sendingStatus);
   const revertApplication = appStore((state) => state.revertApplication);
   const [dataToRevert, setDataToRevert] = useState();
 
+  const rejectApplication = appStore((state) => state.rejectApplication);
+  const [actionFunction, setActionFunction] = useState("approve");
+
   useEffect(() => {
     const fetchApplication = async () => {
-      await getApplication(id, accessToken);
+      getUser()
+      await getApplication(id, user.token);
     };
     fetchApplication();
   }, []);
 
   const openApproveModal = (data) => {
     setModalOpen(true);
-    setDataToApproved(data);
+    setDataToApprovedOrReject(data);
+    setActionFunction("approve");
+  };
+
+  const openRejectModal = (data) => {
+    setDataToApprovedOrReject(data);
+    setActionFunction("reject");
+    setModalOpen(true);
+  };
+
+  const openRevertModal = (data) => {
+    setDataToRevert(data);
+    setActionFunction("revert");
+    setModalOpen(true);
   };
 
   const handleClose = () => {
@@ -47,15 +64,26 @@ const ReviewApplications = () => {
     await approveApplication(dataToApprove, token);
     setModalOpen(false);
   };
-
-  const openRevertModal = (data) => {
-    setModalOpen(true);
-    setDataToRevert(data);
+  const handleReject = async () => {
+    rejectApplication(dataToApprove, token);
+    setModalOpen(false);
   };
 
   const handleRevert = async () => {
     await revertApplication(dataToRevert, token);
     setModalOpen(false);
+  };
+  const switchAction = (action) => {
+    switch (action) {
+      case "approve":
+        return handleApprove;
+      case "reject":
+        return handleReject;
+      case "revert":
+        return handleRevert;
+      default:
+        return;
+    }
   };
 
   return (
@@ -71,9 +99,7 @@ const ReviewApplications = () => {
             title={
               application.status == "pending" ? "Continue Action" : "Revert"
             }
-            action={
-              application.status == "pending" ? handleApprove : handleRevert
-            }
+            action={actionFunction && switchAction(actionFunction)}
             handleClose={handleClose}
             open={isConfirmModalOpen}
           />
@@ -109,9 +135,9 @@ const ReviewApplications = () => {
                 </button>
                 <button
                   className="rejectBtn btn-primary"
-                  onClick={() => openApproveModal(application)}
+                  onClick={() => openRejectModal(application)}
                 >
-                 Reject
+                  Reject
                 </button>
               </>
             ) : (
