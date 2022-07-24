@@ -56,3 +56,12 @@
         color: var(--bs-light);
     }
 }
+
+.rejectBtn {
+    display: block;
+    width: 100%;
+    background-color: var(--bs-red);
+    margin-top: 20px;
+    transition: all 0.2s ease;
+    display: block;
+}

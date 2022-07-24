@@ -22,10 +22,10 @@ const ReviewApplications = () => {
   const loading = appStore((state) => state.loading);
   const [isConfirmModalOpen, setModalOpen] = useState(false);
   const [dataToApprove, setDataToApproved] = useState();
-  const sendingMessage = appStore((state) => state.sendingMessage)
-  const sendingStatus = appStore((state) => state.sendingStatus)
-  const revertApplication = appStore((state) => state.revertApplication)
-  const [dataToRevert, setDataToRevert] = useState()
+  const sendingMessage = appStore((state) => state.sendingMessage);
+  const sendingStatus = appStore((state) => state.sendingStatus);
+  const revertApplication = appStore((state) => state.revertApplication);
+  const [dataToRevert, setDataToRevert] = useState();
 
   useEffect(() => {
     const fetchApplication = async () => {
@@ -49,23 +49,31 @@ const ReviewApplications = () => {
   };
 
   const openRevertModal = (data) => {
-    setModalOpen(true)
-    setDataToRevert(data)
-  }
+    setModalOpen(true);
+    setDataToRevert(data);
+  };
 
   const handleRevert = async () => {
-    await revertApplication(dataToRevert, token)
-    setModalOpen(false)
-  }
+    await revertApplication(dataToRevert, token);
+    setModalOpen(false);
+  };
 
   return (
     <>
       {!loading && application != 0 ? (
         <div className="review-application-wrapper">
           <ConfirmModal
-            message={application.status == 'pending' ? "Are you sure you want to approve this property?" : 'Are you sure you want to revert?'}
-            title={application.status == 'pending' ? 'Approve Property' : 'Revert'}
-            action={application.status == 'pending' ? handleApprove : handleRevert}
+            message={
+              application.status == "pending"
+                ? "Are you sure you want to continue this action?"
+                : "Are you sure you want to revert?"
+            }
+            title={
+              application.status == "pending" ? "Continue Action" : "Revert"
+            }
+            action={
+              application.status == "pending" ? handleApprove : handleRevert
+            }
             handleClose={handleClose}
             open={isConfirmModalOpen}
           />
@@ -92,14 +100,27 @@ const ReviewApplications = () => {
               ></img>
             </div>
             {application.status == "pending" ? (
-              <button
-                className="approveBtn btn-primary"
-                onClick={() => openApproveModal(application)}
-              >
-                Approve
-              </button>
+              <>
+                <button
+                  className="approveBtn btn-primary"
+                  onClick={() => openApproveModal(application)}
+                >
+                  Approve
+                </button>
+                <button
+                  className="rejectBtn btn-primary"
+                  onClick={() => openApproveModal(application)}
+                >
+                 Reject
+                </button>
+              </>
             ) : (
-              <button className="btn revertBtn" onClick={() => openRevertModal(application)}>Revert</button>
+              <button
+                className="btn revertBtn"
+                onClick={() => openRevertModal(application)}
+              >
+                Revert
+              </button>
             )}
           </div>
           <div className="__map-wrapper">
