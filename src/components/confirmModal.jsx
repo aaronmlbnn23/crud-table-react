@@ -5,7 +5,7 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 
 const confirmModal = (props) => {
-    const { open, handleClose, onDelete} = props;
+    const { open, handleClose, action, message, title} = props;
   return (
      <Dialog
         open={open}
@@ -13,16 +13,16 @@ const confirmModal = (props) => {
        
       >
         <DialogTitle>
-            Delete Account
+            {title}
         </DialogTitle>
         <DialogContent>
           <DialogContentText>
-            Are you sure you want to delete this account? This action cannot be reversible. You may want to deactivate the account instead.
+            {message}
           </DialogContentText>
         </DialogContent>
         <DialogActions>
             <button onClick={handleClose}>Close</button>
-            <button className="btn-primary" onClick={onDelete}>Yes, Proceed</button>
+            <button className="btn-primary" onClick={action}>Yes, Proceed</button>
         </DialogActions>
       </Dialog>
   )

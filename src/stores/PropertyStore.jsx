@@ -11,23 +11,11 @@ export const propertyStore = create((set, get) => ({
 
   setSelectedCoordinate: (data) => {
     set({ selectedCoordinates: data })
-  },
-
-  approveApplication: async (data, token) => {
-
-    const headers = {
-      Authorization: `Bearer ${token}`,
-      'content-type': 'application/json'
-    }
-    axios.put(`/approve-application/${data.tdId}`, data, { headers: headers })
-      .then((response) => {
-        const data = response.data
-        console.log(data)
-      }).finally(() => {
-
-      })
 
   },
+
+
+
 
   fetchMyProperty: async (id, token) => {
 

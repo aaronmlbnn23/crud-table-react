@@ -2,3 +2,20 @@
     height: 100%;
     width: 100%;
 }
+
+.bubble-wrapper {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+
+    span {
+        display: block;
+        width: 100%;
+        white-space: nowrap;
+    }
+
+}
+
+.H_ib_content {
+    width: 250px !important;
+}

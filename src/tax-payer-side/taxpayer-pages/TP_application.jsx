@@ -1,10 +1,14 @@
 import React, { useState } from 'react'
 import Map from '../taxpayer-components/map'
 import ApplyForm from '../taxpayer-components/applyForm'
+import Toaster from '../../components/toaster'
+import { userStore } from '../../stores/UserStore'
+import { appStore } from '../../stores/AppStore'
 
 
 const TP_application = () => {
-
+    const sendingStatus = appStore((state) => state.sendingStatus)
+    const sendingMessage = appStore((state) => state.sendingMessage)
 
     return (
         <div className='__application-wrapper'>
@@ -37,12 +41,14 @@ const TP_application = () => {
                         </dd>
                     </dl>
                 </div>
-                <ApplyForm />
+                <ApplyForm  />
 
             </div>
             <div className='map-wrapper'>
                 <Map />
             </div>
+            {sendingMessage && sendingStatus ? <Toaster message={sendingMessage} status={sendingStatus}/> : ''}     
+          
         </div>
     )
 }
