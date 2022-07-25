@@ -5,8 +5,10 @@ export const appStore = create((set, get) => ({
   application: [],
   applications: [],
 
-  sendingStatus: false,
+  sendingStatus: '',
   sendingMessage: "",
+  response: null,
+  approveStatus: true,
 
   setSendingMessage: (message) => {
     set({ sendingMessage: message });
@@ -66,6 +68,7 @@ export const appStore = create((set, get) => ({
   },
 
   approveApplication: async (data, token) => {
+    const res = await get().response
     const headers = {
       Authorization: `Bearer ${token}`,
       "content-type": "application/json",
@@ -73,18 +76,38 @@ export const appStore = create((set, get) => ({
     axios
       .put(`/approve-application/${data.tdId}`, data, { headers: headers })
       .then((response) => {
-        const data = response.data;
-        console.log(data);
+        // console.log(res)
+        const res = response.data
+
         set((state) => ({
           application: {
             ...state.application,
-            status: data.status,
+            status: res.status,
           },
         }));
+
       })
       .finally(() => {
+
         set((state) => ({ sendingMessage: "Approved successfully." }));
-        set((state) => ({ sendingStatus: "sucsess" }));
+        set((state) => ({ sendingStatus: 'success' }));
+
+
+
+        setTimeout(() => {
+          set((state) => ({
+            sendingMessage: "",
+          }));
+          set((state) => ({
+            sendingStatus: false,
+          }));
+        }, 2500);
+      }).catch( async (err) => {
+        const error = await err.response.data
+        const message = error.message
+        set((state) => ({ sendingMessage: message }));
+        set((state) => ({ sendingStatus: 'error' }));
+        
 
         setTimeout(() => {
           set((state) => ({
@@ -116,7 +139,7 @@ export const appStore = create((set, get) => ({
       })
       .finally(() => {
         set((state) => ({ sendingMessage: "Rejected successfully." }));
-        set((state) => ({ sendingStatus: "sucsess" }));
+        set((state) => ({ sendingStatus: "success" }));
 
         setTimeout(() => {
           set((state) => ({
@@ -148,7 +171,7 @@ export const appStore = create((set, get) => ({
       })
       .finally(() => {
         set((state) => ({ sendingMessage: "Reverted successfully." }));
-        set((state) => ({ sendingStatus: "sucsess" }));
+        set((state) => ({ sendingStatus: "success" }));
 
         setTimeout(() => {
           set((state) => ({

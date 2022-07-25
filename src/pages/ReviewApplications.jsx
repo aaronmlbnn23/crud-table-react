@@ -8,6 +8,7 @@ import ConfirmModal from "../components/confirmModal";
 import { appStore } from "../stores/AppStore";
 import { accessToken } from "../Utilities/Utilities";
 import Toaster from "../components/toaster";
+import ImageViewer from "../components/imageViewer";
 
 const ReviewApplications = () => {
   const { id } = useParams();
@@ -26,6 +27,7 @@ const ReviewApplications = () => {
   const sendingStatus = appStore((state) => state.sendingStatus);
   const revertApplication = appStore((state) => state.revertApplication);
   const [dataToRevert, setDataToRevert] = useState();
+  const approveStatus = appStore((state) => state.approveStatus)
 
   const rejectApplication = appStore((state) => state.rejectApplication);
   const [actionFunction, setActionFunction] = useState("approve");
@@ -86,6 +88,11 @@ const ReviewApplications = () => {
     }
   };
 
+  const toggleImageViewer = () => {
+    const imageviewer = document.querySelector('#image-viewer')
+    imageviewer.classList?.add('active')
+  }
+
   return (
     <>
       {!loading && application != 0 ? (
@@ -104,26 +111,36 @@ const ReviewApplications = () => {
             open={isConfirmModalOpen}
           />
           {sendingMessage && sendingStatus ? (
-            <Toaster message={sendingMessage} status={sendingStatus} />
+            <Toaster message={sendingMessage} status={sendingStatus} approveStatus={approveStatus} />
           ) : (
             ""
           )}
 
           <div className="review-container">
             <div className="review-items">
-              ReviewApplications
+              <h3>Review Applications</h3>
               <span>Tax declaration number: {application.tdId}</span>
               <span>Owner Name: {application.name}</span>
               <span>Classification: {application.classification}</span>
               <span>Address: {application.address}</span>
               <span>Assessed Value: {application.assessedValue}</span>
               <span>Status: {application.status}</span>
-              <img
-                src={`http://localhost:8000/storage/images/${
-                  application && application.image.split("/")[2]
-                }`}
-                alt="application-image"
-              ></img>
+              <div className="__review-image">
+                <span>Receipt photo:</span>
+
+                <img
+                id="application-image"
+                  src={`http://localhost:8000/storage/images/${application && application.image.split("/")[2]
+                    }`}
+                  alt="application-image"
+                  onClick={() => toggleImageViewer()}
+                ></img>
+
+                <ImageViewer className="__image-viewer" imageUrl={`http://localhost:8000/storage/images/${application && application.image.split("/")[2]
+                  }`} />
+
+
+              </div>
             </div>
             {application.status == "pending" ? (
               <>

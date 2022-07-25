@@ -1,9 +1,9 @@
 import React from 'react'
 
-const toaster = ({message, status}) => {
+const toaster = ({message, status, approveStatus}) => {
   return (
-    <div className={`toaster-wrapper ${status ? 'success' : 'error'}`}>
-        <div className={`toaster-message ${status ? 'success' : 'error'}`}>
+    <div className={`toaster-wrapper ${status == 'success' ? 'success' : 'error'}  ${approveStatus ? 'approveSuccess' : 'approveError'}`}>
+        <div className={`toaster-message ${status == 'success' ? 'success' : 'error'}`}>
             <span>{message}</span>
         </div>
     </div>

@@ -23,6 +23,23 @@
 
         }
 
+        .__review-image{
+            span {
+                display: flex;
+                
+            }
+
+            img{
+                max-width: 50px;
+                width: 100%;
+                height: auto;
+                cursor: pointer;
+
+
+             
+            }
+        }
+
       
     }
     .__map-wrapper {
@@ -62,7 +79,19 @@
     display: block;
     width: 100%;
     background-color: var(--bs-red);
-    margin-top: 20px;
+    margin-top: 10px;
     transition: all 0.2s ease;
     display: block;
+}
+
+@media screen and (max-width: 768px) {
+    .review-application-wrapper {
+        height: calc(100% - var(--nav-tp)) !important;
+        flex-wrap: wrap;
+        overflow: auto !important;
+    }
+
+    .review-container {
+        height: auto !important;
+    }
 }
