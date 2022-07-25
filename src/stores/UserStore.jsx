@@ -20,7 +20,7 @@ export const userStore = create((set, get) => ({
   application: [],
   loading: true,
   message: "",
-  status: false,
+  status: '',
   isAddModalOpen: false,
 
   toggleAddModal: () => {
@@ -135,7 +135,7 @@ export const userStore = create((set, get) => ({
         console.log(accounts);
         set({ isAddModalOpen: false });
         set({ message: "Account added successfully." });
-        set({ status: true });
+        set({ status: 'success' });
 
         setTimeout(() => {
           set((state) => ({ message: "" }));
@@ -163,7 +163,7 @@ export const userStore = create((set, get) => ({
       })
       .finally(() => {
         set({ message: "Account status updated successfully." });
-        set({ status: true });
+        set({ status: 'success' });
 
         setTimeout(() => {
           set((state) => ({ message: "" }));
@@ -190,7 +190,7 @@ export const userStore = create((set, get) => ({
       })
       .finally(() => {
         set({ message: "Account deleted successfully." });
-        set({ status: true });
+        set({ status: 'success' });
 
         setTimeout(() => {
           set((state) => ({ message: "" }));
@@ -221,7 +221,7 @@ export const userStore = create((set, get) => ({
       })
       .finally(() => {
         set({ message: "Account updated successfully." });
-        set({ status: true });
+        set({ status: 'success' });
 
         setTimeout(() => {
           set((state) => ({ message: "" }));
