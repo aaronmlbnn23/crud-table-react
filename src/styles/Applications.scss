@@ -3,4 +3,22 @@
     height: calc(100% - var(--navbar-h));
     width: 100%;
     
+
+    .application-status {
+        text-transform: capitalize;
+        font-size: var(--fs-xs);
+        padding: 2px 10px;
+        border-radius: 3px;
+        color: var(--bs-light);
+        
+        &.status-pending {
+            background-color: var(--bs-orange);
+        }
+        &.status-approved {
+            background-color: var(--bs-blue);
+        }
+        &.status-rejected {
+            background-color: var(--bs-red);
+        }
+    }
 }

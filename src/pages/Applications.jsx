@@ -11,21 +11,14 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import Switch from "@mui/material/Switch";
 import EnhancedTableHead from "../components/application-table-components/table-head";
 import TableToolbar from "../components/application-table-components/table-toolbar";
-import AddModal from "../components/addModal";
-import DeleteIcon from "@mui/icons-material/Delete";
-import EditIcon from "@mui/icons-material/Edit";
 import IconButton from "@mui/material/IconButton";
 import Tooltip from "@mui/material/Tooltip";
-import ConfirmModal from "../components/confirmModal";
-import EditModal from "../components/editModal";
-import UpdateAccount from "../components/UpdateAccount";
-import { propertyStore } from "../stores/PropertyStore";
 import { Link } from "react-router-dom";
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 import { userStore } from "../stores/UserStore";
 import Loader from "../components/loader";
 import { appStore } from "../stores/AppStore";
-import { accessToken } from "../Utilities/Utilities";
+ 
 
 function descendingComparator(a, b, orderby) {
   if (b[orderby] < a[orderby]) {
@@ -83,6 +76,7 @@ const Applications = () => {
   useEffect(() => {
     const getApplications = async () => {
       getUser();
+      document.title = 'Applications - RPT'
       await fetchApplications(user.token);
     };
     getApplications();
@@ -106,6 +100,19 @@ const Applications = () => {
   const handleChangeDense = (event) => {
     setDense(event.target.checked);
   };
+
+  const applicationStatus = (status) => {
+    switch (status) {
+      case 'pending':
+        return 'status-pending'
+      case 'approved':
+        return 'status-approved'
+      case 'rejected':
+        return 'status-rejected'
+      default:
+        return ''
+    }
+  }
 
   // Avoid a layout jump when reaching the last page with empty rows.
   const emptyRows =
@@ -175,7 +182,8 @@ const Applications = () => {
                               {app.classification}
                             </TableCell>
                             <TableCell align="center">
-                              {app.assessedValue}
+                              <span className={`application-status ${applicationStatus(app.status)}`}> {app.status}</span>
+
                             </TableCell>
 
                             <TableCell align="center">

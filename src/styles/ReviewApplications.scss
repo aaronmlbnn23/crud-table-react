@@ -1,73 +1,160 @@
 .review-application-wrapper {
     height: calc(100vh - var(--nav-tp));
     padding: 20px;
-    display: flex;
     overflow: hidden;
-    
+    position: relative;
+
+    .page-title-container {
+        width: 100%;
+        display: block;
+    }
+
+    .main-content {
+        display: flex;
+        margin-top: 30px;
+        gap: 20px;
+    }
 
 
-    .review-container {
+    .review-map-card {
         position: relative;
-        height: 100%;
-        padding: 20px;
-        background-color: var(--bs-gray-200);
-        width: 350px;
-        flex-grow: 1;
+        height: auto;
+        background-color: var(--bs-gray-100);
+        max-width: 800px;
+        width: 100%;
+        border: 0.25px solid var(--bs-gray-300);
+        
+
+    }
+
+    .review-content {
+        width: 100%;
+        height: calc(100% - 42px);
+        
+    }
+
+    .review-title {
+        display: flex;
+        align-items: center;
+        height: 42px;
+        padding: 0 20px;
+        background-color: var(--bs-gray-100);
+        border-bottom: 0.25px solid var(--bs-gray-300);
+    }
+
+    .review-card {
+        position: relative;
+        height: auto;
+        background-color: var(--bs-gray-100);
+        max-width: 500px;
+        width: 100%;
         flex-shrink: 0;
-        overflow: auto;
+        border: 0.25px solid var(--bs-gray-300);
+        overflow: hidden;
 
 
-        .review-items {
+
+
+        .review-details {
             display: flex;
             flex-direction: column;
+            padding: 20px;
 
-        }
 
-        .__review-image{
-            span {
-                display: flex;
-                
+            table {
+                border-collapse: collapse;
             }
 
-            img{
+            th {
+                padding: 5px 0;
+                background-color: var(--bs-gray-200);
+
+
+            }
+
+            tr {
+                height: 30px;
+                border-bottom: 0.25px solid var(--bs-gray-300);
+            }
+        }
+
+
+        .__review-image {
+            span {
+                display: flex;
+
+            }
+
+            img {
                 max-width: 50px;
                 width: 100%;
                 height: auto;
                 cursor: pointer;
 
 
-             
+
             }
         }
 
-      
-    }
-    .__map-wrapper {
-        position: relative;
-        width: 100%;
-        height: calc(100vh - var(--nav-tp))
+        .review-footer {
+            border-top: 0.25px solid var(--bs-gray-300);
+            padding: 20px;
+
+            .action-buttons {
+                display: flex;
+                padding: 0;
+            }
+        }
+
+
+
     }
 
-    
+    .applicant-details {
+        position: relative;
+        height: 100%;
+
+        padding: 20px;
+        background-color: var(--bs-gray-100);
+        width: 350px;
+        flex-shrink: 0;
+        overflow: auto;
+        border: 0.25px solid var(--bs-gray-300);
+    }
+
+   
+
+
 }
 
 
 .approveBtn {
-    margin-top: 20px;
+
     display: block;
     width: 100%;
     transition: all 0.3s ease-in-out;
+    margin-left: 12px;
+
     &:hover {
         background-color: var(--bs-indigo-hover);
     }
+}
+
+.rejectBtn {
+
+    display: block;
+    width: 100%;
+    transition: all 0.3s ease-in-out;
+    background-color: var(--bs-red);
+
 }
 
 .revertBtn {
     display: block;
     width: 100%;
     border: 1px solid var(--bs-red);
-    margin-top: 20px;
     transition: all 0.2s ease;
+
 
     &:hover {
         background-color: var(--bs-red);
@@ -75,14 +162,7 @@
     }
 }
 
-.rejectBtn {
-    display: block;
-    width: 100%;
-    background-color: var(--bs-red);
-    margin-top: 10px;
-    transition: all 0.2s ease;
-    display: block;
-}
+
 
 @media screen and (max-width: 768px) {
     .review-application-wrapper {
@@ -91,7 +171,11 @@
         overflow: auto !important;
     }
 
-    .review-container {
+    .review-card {
         height: auto !important;
+    }
+
+    .main-content {
+        flex-wrap: wrap !important;
     }
 }

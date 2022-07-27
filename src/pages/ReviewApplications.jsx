@@ -115,64 +115,125 @@ const ReviewApplications = () => {
           ) : (
             ""
           )}
+          <div className="page-title-container">
+            <h3 className="page-title">Application / {id}</h3>
+          </div>
+          <div className="main-content">
+            <div className="review-card">
 
-          <div className="review-container">
-            <div className="review-items">
-              <h3>Review Applications</h3>
-              <span>Tax declaration number: {application.tdId}</span>
-              <span>Owner Name: {application.name}</span>
-              <span>Classification: {application.classification}</span>
-              <span>Address: {application.address}</span>
-              <span>Assessed Value: {application.assessedValue}</span>
-              <span>Status: {application.status}</span>
-              <div className="__review-image">
-                <span>Receipt photo:</span>
+              <div className="review-title">
+                <h3>Application Details</h3>
+              </div>
+              <div className="review-content">
+                <div className="review-details">
 
-                <img
-                id="application-image"
-                  src={`http://localhost:8000/storage/images/${application && application.image.split("/")[2]
-                    }`}
-                  alt="application-image"
-                  onClick={() => toggleImageViewer()}
-                ></img>
+                  <table>
 
-                <ImageViewer className="__image-viewer" imageUrl={`http://localhost:8000/storage/images/${application && application.image.split("/")[2]
-                  }`} />
+                    <th>Data</th>
+                    <th>Value</th>
 
 
+                    <tr>
+                      <td>Tax Declaration Number:</td>
+                      <td>{application.tdId}</td>
+                    </tr>
+                    <tr>
+                      <td>Applicant ID:</td>
+                      <td>{application.applicantId}</td>
+                    </tr>
+                    <tr>
+                      <td>Owner Name:</td>
+                      <td>{application.name}</td>
+                    </tr>
+                    <tr>
+                      <td>Classification:</td>
+                      <td>{application.classification}</td>
+                    </tr>
+                    <tr>
+                      <td>Address:</td>
+                      <td>{application.address}</td>
+                    </tr>
+                    <tr>
+                      <td>Assessed Value:</td>
+                      <td>{application.assessedValue}</td>
+                    </tr>
+                    <tr>
+                      <td>Coordinates:</td>
+                      <td>{application.coordinates}</td>
+                    </tr>
+                    <tr>
+                      <td>Application Status:</td>
+                      <td>{application.status}</td>
+                    </tr>
+                    <tr>
+                      <td>Proof image:</td>
+                      <td><div className="__review-image">
+
+                        <img
+                          id="application-image"
+                          src={`http://localhost:8000/storage/images/${application && application.image.split("/")[2]
+                            }`}
+                          alt="application-image"
+                          onClick={() => toggleImageViewer()}
+                        ></img>
+
+                        <ImageViewer className="__image-viewer" imageUrl={`http://localhost:8000/storage/images/${application && application.image.split("/")[2]
+                          }`} />
+
+
+                      </div></td>
+                    </tr>
+
+                  </table>
+
+                </div>
+                <div className="review-footer">
+                  <div className="action-buttons">
+                    {application.status == "pending" ? (
+                      <>
+                        <button
+                          className="rejectBtn btn-primary"
+                          onClick={() => openRejectModal(application)}
+                        >
+                          Reject
+                        </button>
+                        <button
+                          className="approveBtn btn-primary"
+                          onClick={() => openApproveModal(application)}
+                        >
+                          Approve
+                        </button>
+
+                      </>
+                    ) : (
+                      <button
+                        className="btn revertBtn"
+                        onClick={() => openRevertModal(application)}
+                      >
+                        Revert
+                      </button>
+                    )}</div>
+                </div>
               </div>
             </div>
-            {application.status == "pending" ? (
-              <>
-                <button
-                  className="approveBtn btn-primary"
-                  onClick={() => openApproveModal(application)}
-                >
-                  Approve
-                </button>
-                <button
-                  className="rejectBtn btn-primary"
-                  onClick={() => openRejectModal(application)}
-                >
-                  Reject
-                </button>
-              </>
-            ) : (
-              <button
-                className="btn revertBtn"
-                onClick={() => openRevertModal(application)}
-              >
-                Revert
-              </button>
-            )}
-          </div>
-          <div className="__map-wrapper">
-            <Map applicationData={application} />
+
+            
+              <div className="review-map-card">
+                <div className="review-title">
+                  <h3>Location</h3>
+                </div>
+                <div className="review-content">
+                  <Map applicationData={application} />
+                </div>
+
+              </div>
+           
           </div>
         </div>
       ) : (
         <Loader />
-      )}
+      )
+      }
     </>
   );
 };

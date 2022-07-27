@@ -12,15 +12,16 @@ const TP_dashboard = () => {
   const fetchMyProperty = propertyStore((state) => state.fetchMyProperty)
   const myProperty = propertyStore((state) => state.myProperty)
   const loading = propertyStore((state) => state.loading)
+  
+
 
   useEffect(() => {
-    fetchMyProperty(user.id, user.token)
-  }, [user])
-
-  useEffect(() => {
-    getUser()
-
-  }, [])
+    const getProperty = async () => {
+      getUser();
+      await fetchMyProperty(user.id, user.token);
+    };
+    getProperty();
+  }, [user]);
 
 
 

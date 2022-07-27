@@ -1,7 +1,7 @@
 import { Navigate, Route, Routes, useNavigate, useLocation } from "react-router-dom";
 import ProtectedRoutes from "./ProtectedRoutes";
 import { userStore } from "./stores/UserStore";
-import { LandingPage, Dashboard, Login, Register, Home, Profile, Accounts, NotFound, Layout, Applications, ReviewApplications } from './pages';
+import { LandingPage, Dashboard, Login, Register, Home, Profile, Accounts, NotFound, Layout, Applications, ReviewApplications, Properties } from './pages';
 import { TP_dashboard, TP_layout, TP_property, TP_signup, TP_application } from './tax-payer-side/taxpayer-pages'
 import { useState, useEffect } from 'react'
 import { accessToken, userData } from "./Utilities/Utilities";
@@ -44,6 +44,7 @@ const Views = () => {
             <Route path='/accounts' element={<Accounts />} />
             <Route path='/application/:id' element={<ReviewApplications />} />
             <Route path='/applications' element={<Applications />} />
+            <Route path='/properties' element={<Properties />} />
           </Route>
         </Route> :
         <Route element={<ProtectedRoutes />}>

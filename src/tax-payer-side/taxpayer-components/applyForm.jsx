@@ -76,7 +76,7 @@ const applyForm = (props) => {
           setSelectedCoordinate('')
         })
         .finally(() => {
-          setSendingStatus(true);
+          setSendingStatus('true');
           setSendingMessage("Your application sent successfully.");
 
           setTimeout(() => {
@@ -84,7 +84,7 @@ const applyForm = (props) => {
           }, 2500)
         });
     } catch (err) {
-      setSendingApplyStatus(false);
+      setSendingApplyStatus('false');
       setSendingMessage("Your application failed to send.");
       console.log(`error ${err}`);
     }

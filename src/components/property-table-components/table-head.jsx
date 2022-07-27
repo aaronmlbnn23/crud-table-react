@@ -9,7 +9,7 @@ import Box from '@mui/material/Box';
 const EnhancedTableHead = (props) => {
     const headCells = [
       {
-        id: 'id',
+        id: 'tdId',
         numeric: true,
         disablePadding: false,
         label: 'TDID',
@@ -28,20 +28,6 @@ const EnhancedTableHead = (props) => {
         disablePadding: false,
         label: 'Address',
    
-      },
-      {
-        id: 'classification',
-        numeric: true,
-        disablePadding: false,
-        label: 'Classification',
-      
-      },
-      {
-        id: 'status',
-        numeric: true,
-        disablePadding: false,
-        label: 'Status',
-        
       },
       {
         id: 'action',
