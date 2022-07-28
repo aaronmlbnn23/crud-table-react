@@ -6,9 +6,11 @@ import {useLocation} from 'react-router-dom'
 const Dashboard = () => {
   const getUser = userStore((state) => state.getUser)
   const loading = userStore((state) => state.loading)
+  const user =userStore((state) => state.user)
   useEffect(() => {
     getUser()
 }, [])
+console.log(user.token)
   useEffect(() => {
     document.title = 'Dashboard - RPT'
   }, [])

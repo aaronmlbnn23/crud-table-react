@@ -3,7 +3,7 @@ import { Link, NavLink, useLocation } from 'react-router-dom'
 import Logo from '../assets/images/logo.png';
 import { MdDashboard, MdManageAccounts, MdPerson, MdList } from 'react-icons/md'
 import { userStore } from '../stores/UserStore';
-import { RiBuildingFill } from 'react-icons/ri'
+import { RiBuildingFill, RiRoadMapFill } from 'react-icons/ri'
 
 const sidebar = () => {
   const location = useLocation();
@@ -22,7 +22,7 @@ const sidebar = () => {
         </div>
 
        <div className='menu-wrapper'>
-          <Link className={`link ${splitLocation[1] == "dashboard" ? 'active' : ''}`} as={NavLink} to='/dashboard'>
+          <Link className={`link ${splitLocation[1] == "admin-dashboard" ? 'active' : ''}`} as={NavLink} to='/admin-dashboard'>
             <MdDashboard className='menu-icon' />
             Dashboard</Link>
           <Link className={`link ${splitLocation[1] == "accounts" ? 'active' : ''}`} as={NavLink} to='/accounts'>
@@ -36,6 +36,10 @@ const sidebar = () => {
           <Link className={`link ${splitLocation[1] == "properties" ? 'active' : ''}`} as={NavLink} to='/properties'>
             <RiBuildingFill className='menu-icon' />
             Properties
+          </Link>
+          <Link className={`link ${splitLocation[1] == "geomap" ? 'active' : ''}`} as={NavLink} to='/geomap'>
+            <RiRoadMapFill className='menu-icon' />
+            Geomapping
           </Link>
 
         </div>

@@ -74,9 +74,11 @@ const applyForm = (props) => {
           reset();
           console.log(response);
           setSelectedCoordinate('')
+          setChosenFile(null)
+
         })
         .finally(() => {
-          setSendingStatus('true');
+          setSendingStatus('success');
           setSendingMessage("Your application sent successfully.");
 
           setTimeout(() => {
@@ -84,7 +86,7 @@ const applyForm = (props) => {
           }, 2500)
         });
     } catch (err) {
-      setSendingApplyStatus('false');
+      setSendingApplyStatus('error');
       setSendingMessage("Your application failed to send.");
       console.log(`error ${err}`);
     }
@@ -237,7 +239,7 @@ const applyForm = (props) => {
             onChange={handleChosenFile}
           />
 
-          {chosenFile && <p className="chosenFile">File name: {chosenFile}</p>}
+          {chosenFile && <p id="chosenFile" className="chosenFile">File name: {chosenFile}</p>}
         </div>
       </div>
 

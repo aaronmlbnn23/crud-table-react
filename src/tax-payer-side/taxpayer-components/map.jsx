@@ -12,9 +12,6 @@ const map = ({ applicationData }) => {
   const selectCoordinate = propertyStore(
     (state) => state.setSelectedCoordinate
   );
-  const selectedCoordinate = propertyStore(
-    (state) => state.selectedCoordinates
-  );
   const application = appStore((state) => state.application);
 
   useEffect(() => {
@@ -32,9 +29,10 @@ const map = ({ applicationData }) => {
     var lng;
 
     if (applicationData && application) {
-      coordinates = applicationData.coordinates.split(" ");
+      coordinates = applicationData.coordinates.split(", ");
       lat = coordinates[0];
       lng = coordinates[1];
+ 
     } else {
       lat = 13.8721;
       lng = 121.022;
@@ -69,7 +67,7 @@ const map = ({ applicationData }) => {
 
       marker = new H.map.Marker({ lat: lat, lng: lng });
       hMap.addObject(marker);
-      selectCoordinate(lat.toString() + " " + lng.toString());
+      selectCoordinate(lat.toString() + ", " + lng.toString());
     };
 
     hMap.addEventListener("tap", tapEvent);
@@ -114,10 +112,10 @@ const map = ({ applicationData }) => {
     // This will act as a cleanup to run once this hook runs again.
     // This includes when the component un-mounts
     return () => {
-      //if(location != '/apply-property')
-      hMap.dispose();
-      //behavior.dispose()
-      // ui.dispose()
+      if(location != '/apply-property' || location !== '/application') hMap.dispose(); behavior.dispose(); ui.dispose() 
+     
+      
+      
     };
   }, [mapRef, applicationData]);
   return <div className="map" ref={mapRef} />;

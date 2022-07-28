@@ -129,61 +129,68 @@ const ReviewApplications = () => {
 
                   <table>
 
-                    <th>Data</th>
-                    <th>Value</th>
+                    <thead>
+                      <tr>
+
+                      <th>Data</th>
+                      <th>Value</th>
+                      </tr>
+                    </thead>
+
+                    <tbody>
+
+                      <tr>
+                        <td>Tax Declaration Number:</td>
+                        <td>{application.tdId}</td>
+                      </tr>
+                      <tr>
+                        <td>Applicant ID:</td>
+                        <td>{application.applicantId}</td>
+                      </tr>
+                      <tr>
+                        <td>Owner Name:</td>
+                        <td>{application.name}</td>
+                      </tr>
+                      <tr>
+                        <td>Classification:</td>
+                        <td>{application.classification}</td>
+                      </tr>
+                      <tr>
+                        <td>Address:</td>
+                        <td>{application.address}</td>
+                      </tr>
+                      <tr>
+                        <td>Assessed Value:</td>
+                        <td>{application.assessedValue}</td>
+                      </tr>
+                      <tr>
+                        <td>Coordinates:</td>
+                        <td>{application.coordinates}</td>
+                      </tr>
+                      <tr>
+                        <td>Application Status:</td>
+                        <td>{application.status}</td>
+                      </tr>
+                      <tr>
+                        <td>Proof image:</td>
+                        <td><div className="__review-image">
+
+                          <img
+                            id="application-image"
+                            src={`http://localhost:8000/storage/images/${application && application.image.split("/")[2]
+                              }`}
+                            alt="application-image"
+                            onClick={() => toggleImageViewer()}
+                          ></img>
+
+                          <ImageViewer className="__image-viewer" imageUrl={`http://localhost:8000/storage/images/${application && application.image.split("/")[2]
+                            }`} />
 
 
-                    <tr>
-                      <td>Tax Declaration Number:</td>
-                      <td>{application.tdId}</td>
-                    </tr>
-                    <tr>
-                      <td>Applicant ID:</td>
-                      <td>{application.applicantId}</td>
-                    </tr>
-                    <tr>
-                      <td>Owner Name:</td>
-                      <td>{application.name}</td>
-                    </tr>
-                    <tr>
-                      <td>Classification:</td>
-                      <td>{application.classification}</td>
-                    </tr>
-                    <tr>
-                      <td>Address:</td>
-                      <td>{application.address}</td>
-                    </tr>
-                    <tr>
-                      <td>Assessed Value:</td>
-                      <td>{application.assessedValue}</td>
-                    </tr>
-                    <tr>
-                      <td>Coordinates:</td>
-                      <td>{application.coordinates}</td>
-                    </tr>
-                    <tr>
-                      <td>Application Status:</td>
-                      <td>{application.status}</td>
-                    </tr>
-                    <tr>
-                      <td>Proof image:</td>
-                      <td><div className="__review-image">
+                        </div></td>
+                      </tr>
 
-                        <img
-                          id="application-image"
-                          src={`http://localhost:8000/storage/images/${application && application.image.split("/")[2]
-                            }`}
-                          alt="application-image"
-                          onClick={() => toggleImageViewer()}
-                        ></img>
-
-                        <ImageViewer className="__image-viewer" imageUrl={`http://localhost:8000/storage/images/${application && application.image.split("/")[2]
-                          }`} />
-
-
-                      </div></td>
-                    </tr>
-
+                    </tbody>
                   </table>
 
                 </div>
@@ -217,17 +224,17 @@ const ReviewApplications = () => {
               </div>
             </div>
 
-            
-              <div className="review-map-card">
-                <div className="review-title">
-                  <h3>Location</h3>
-                </div>
-                <div className="review-content">
-                  <Map applicationData={application} />
-                </div>
 
+            <div className="review-map-card">
+              <div className="review-title">
+                <h3>Location</h3>
               </div>
-           
+              <div className="review-content">
+                <Map applicationData={application} />
+              </div>
+
+            </div>
+
           </div>
         </div>
       ) : (

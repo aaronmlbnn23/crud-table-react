@@ -8,8 +8,10 @@ export const propertyStore = create((set, get) => ({
   loading: true,
   myProperty: [],
   properties: [],
-  message:'',
+  message: '',
   status: '',
+  geomapCoordinates: [],
+  dataPoints: [],
 
   setSelectedCoordinate: (data) => {
     set({ selectedCoordinates: data })
@@ -17,7 +19,17 @@ export const propertyStore = create((set, get) => ({
   },
 
 
-
+  setDataPoints: async (data) => {
+    const propertyCoordinates = data.map((coords) => {
+      const lat = coords.coordinates.split(', ')[0]
+      const lng = coords.coordinates.split(', ')[1]
+      return {
+        lat: lat,
+        lng: lng
+      }
+    })
+    set({dataPoints: propertyCoordinates})
+  },
 
   fetchMyProperty: async (id, token) => {
 
@@ -31,7 +43,7 @@ export const propertyStore = create((set, get) => ({
         (response) => {
           const data = response.data
           set(({ myProperty: data }))
-          
+
           console.log(response.data)
         }
       ).then(() => {
@@ -56,18 +68,41 @@ export const propertyStore = create((set, get) => ({
         .get("/properties", { headers: headers })
         .then((response) => {
           const data = response.data;
-          set({properties: data})
+          set({ properties: data })
         })
         .then(() => {
-          
+
           set((state) => ({ loading: false }));
-         
+
         });
     } catch (error) {
       console.log(error);
     }
   },
-  
+
+  fetchGeomap: async (token) => {
+    const headers = {
+      Authorization: `Bearer ${token}`,
+      "content-type": "application/json",
+    };
+    try {
+      set((state) => ({ loading: true }));
+      axios
+        .get("/geomap", { headers: headers })
+        .then((response) => {
+          const data = response.data;
+          set({ geomapCoordinates: data })
+        })
+        .then(() => {
+
+          set((state) => ({ loading: false }));
+
+        });
+    } catch (error) {
+      console.log(error);
+    }
+  },
+
   deleteProperty: async (id, token) => {
 
     const headers = {
