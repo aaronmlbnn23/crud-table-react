@@ -39,40 +39,53 @@ const AdminMap = ({ token }) => {
  
     }
 */
-function addMarkerToGroup(group, coordinate, html) {
-  var marker = new H.map.Marker(coordinate);
-  // add custom data to the marker
-  marker.setData(html);
-  group.addObject(marker);
-}
+    function addMarkerToGroup(group, coordinate, html) {
+
+      var svgMarkup = '<svg stroke="${STROKE}" fill="${FILL}" stroke-width="2px" width="16" height="16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z" /></svg>'
+      var cubsIcon = new H.map.Icon(
+        svgMarkup.replace('${FILL}', 'green').replace('${STROKE}', 'green')),
+        marker = new H.map.Marker(coordinate,
+          { icon: cubsIcon });
+ 
+
+      // var marker = new H.map.Marker(coordinate);
+      // add custom data to the marker
+      marker.setData(html);
+      group.addObject(marker);
+    }
 
 
 
-function addInfoBubble(map) {
-  var group = new H.map.Group();
+    function addInfoBubble(map) {
+      var group = new H.map.Group();
 
-  map.addObject(group);
+      map.addObject(group);
 
-  // add 'tap' event listener, that opens info bubble, to the group
-  group.addEventListener('tap', function (evt) {
-    // event target is the marker itself, group is a parent event target
-    // for all objects that it contains
-    var bubble = new H.ui.InfoBubble(evt.target.getGeometry(), {
-      // read custom data
-      content: evt.target.getData()
-    });
-    // show info bubble
-    ui.addBubble(bubble);
-  }, false);
+      // add 'tap' event listener, that opens info bubble, to the group
+      group.addEventListener('tap', function (evt) {
+        // event target is the marker itself, group is a parent event target
+        // for all objects that it contains
+        var bubble = new H.ui.InfoBubble(evt.target.getGeometry(), {
+          // read custom data
+          content: evt.target.getData()
+        });
+        // show info bubble
+        ui.addBubble(bubble);
+      }, false);
 
 
-  propertyData.map((data) => {
-    const lat = data.coordinates.split(', ')[0]
-    const lng = data.coordinates.split(', ')[1]
-    addMarkerToGroup(group, {lat: lat, lng: lng},
-      `<div>Owner name: ${data.name}</div>`)
-  })
-}
+      propertyData.map((data) => {
+        const lat = data.coordinates.split(', ')[0]
+        const lng = data.coordinates.split(', ')[1]
+        addMarkerToGroup(group, { lat: lat, lng: lng },
+          `
+      <h3>Property Information</h3>
+      <div class="propertyName">Tax Declaration Number: ${data.tdId}</div>
+      <div class="propertyName">Owner name: ${data.name}</div>
+
+      `)
+      })
+    }
 
 
 
