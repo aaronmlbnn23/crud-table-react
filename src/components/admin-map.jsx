@@ -2,35 +2,16 @@ import React, { useRef, useEffect, useState } from "react";
 import { propertyStore } from "../stores/PropertyStore";
 import { userStore } from "../stores/UserStore";
 
-const AdminMap = () => {
+const AdminMap = ({ token }) => {
   const mapRef = useRef();
-  const fetchGeomap = propertyStore((state) => state.fetchGeomap)
-  const user = userStore((state) => state.user)
-  const getUser = userStore((state) => state.getUser)
-  const geomapCoordinates = propertyStore((state) => state.geomapCoordinates)
-  const setDataPoints = propertyStore((state) => state.setDataPoints)
-  const dataPoints = propertyStore((state) => state.dataPoints)
-  useEffect(() => {
-    const getGeomap = async () => {
-      getUser()
-      await fetchGeomap(user.token);
-
-    };
-    getGeomap();
-  }, []);
-
-  useEffect(() => {
-    setDataPoints(geomapCoordinates)
-  }, [geomapCoordinates])
-
-
-  console.log(dataPoints)
-
+  const propertyData = propertyStore((state) => state.propertyData)
 
   useEffect(() => {
     // `mapRef.current` will be `undefined` when this hook first runs; edge case that
     if (!mapRef.current) return;
 
+
+    /** 
     const startClustering = async (map, data) => {
       var d = data.map(function (item) {
         return new H.clustering.DataPoint(item.lat, item.lng);
@@ -39,20 +20,62 @@ const AdminMap = () => {
       var clusteredDataProvider = new H.clustering.Provider(d, {
         clusteringOptions: {
           // Maximum radius of the neighbourhood
-          eps: 32,
+          eps: 64,
           // minimum weight of points required to form a cluster
-          minWeight: 2
-        }
+          minWeight: 3
+        },
+
       });
 
       // Create a layer tha will consume objects from our clustering provider
       var clusteringLayer = new H.map.layer.ObjectLayer(clusteredDataProvider);
 
+
+      clusteredDataProvider.addEventListener('tap', onMarkerClick);
+
       // To make objects from clustering provder visible,
       // we need to add our layer to the map
-      hMap.addLayer(clusteringLayer);
-
+      map.addLayer(clusteringLayer);
+ 
     }
+*/
+function addMarkerToGroup(group, coordinate, html) {
+  var marker = new H.map.Marker(coordinate);
+  // add custom data to the marker
+  marker.setData(html);
+  group.addObject(marker);
+}
+
+
+
+function addInfoBubble(map) {
+  var group = new H.map.Group();
+
+  map.addObject(group);
+
+  // add 'tap' event listener, that opens info bubble, to the group
+  group.addEventListener('tap', function (evt) {
+    // event target is the marker itself, group is a parent event target
+    // for all objects that it contains
+    var bubble = new H.ui.InfoBubble(evt.target.getGeometry(), {
+      // read custom data
+      content: evt.target.getData()
+    });
+    // show info bubble
+    ui.addBubble(bubble);
+  }, false);
+
+
+  propertyData.map((data) => {
+    const lat = data.coordinates.split(', ')[0]
+    const lng = data.coordinates.split(', ')[1]
+    addMarkerToGroup(group, {lat: lat, lng: lng},
+      `<div>Owner name: ${data.name}</div>`)
+  })
+}
+
+
+
 
 
     const H = window.H;
@@ -65,6 +88,8 @@ const AdminMap = () => {
       center: { lat: 13.8721, lng: 121.022 },
       zoom: 15,
       pixelRatio: window.devicePixelRatio || 1,
+
+
     });
 
     window.addEventListener("resize", () => hMap.getViewPort().resize());
@@ -76,9 +101,54 @@ const AdminMap = () => {
     const ui = H.ui.UI.createDefault(hMap, defaultLayers);
 
 
+    addInfoBubble(hMap);
 
+
+
+
+
+
+
+    /** 
+
+    const onMarkerClick = async (e) => {
+      // Get position of the "clicked" marker
+      var position = e.target.getGeometry(),
+        // Get the data associated with that marker
+        data =  await e.target.getData(),
+        // Merge default template with the data and get HTML
+        bubbleContent = getBubbleContent(data),
+        bubble = onMarkerClick.bubble;
+
+        const lat = Math.abs(data.c.lat.toFixed(4));
+        const lng = Math.abs(data.c.lng.toFixed(4));
+        setLocation(lat.toString() + ', ' + lng.toString())
+         console.log(location)
+        //getDatapointsInfo(token, location)
+      // For all markers create only one bubble, if not created yet
+      if (!bubble) {
+        bubble = new H.ui.InfoBubble(position, {
+          content: bubbleContent
+        });
+        ui.addBubble(bubble);
+        // Cache the bubble object
+        onMarkerClick.bubble = bubble;
+      } else {
+        // Reuse existing bubble object
+        bubble.setPosition(position);
+        bubble.setContent(bubbleContent);
+        bubble.open();
+      }
+
+    }
+
+    function getBubbleContent(data) {
+      return `<div className='asdasdasd'>${location}</div>`
+    }
+    
+    
     startClustering(hMap, dataPoints)
-
+*/
 
     // This will act as a cleanup to run once this hook runs again.
     // This includes when the component un-mounts
@@ -88,7 +158,7 @@ const AdminMap = () => {
       //behavior.dispose()
       // ui.dispose()
     };
-  }, [mapRef, dataPoints]);
+  }, [mapRef, propertyData]);
   return <div className="map" ref={mapRef} />;
 };
 

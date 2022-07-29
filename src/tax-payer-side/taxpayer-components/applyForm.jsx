@@ -224,7 +224,7 @@ const applyForm = (props) => {
         <label
           data-required={errors.image?.type === "required" ? "*Required" : ""}
         >
-          Upload a photo of last payment
+          Upload a photo of receipt
         </label>
         <div className="__image-container">
           <label htmlFor="image" className="imageLabel">

@@ -74,7 +74,7 @@ const Properties = () => {
 
   useEffect(() => {
     const getProperties = async () => {
-      getUser();
+     getUser();
       document.title = 'Properties - RPT'
       await fetchProperties(user.token);
     };

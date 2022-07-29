@@ -24,12 +24,18 @@ const Login = () => {
   const { register, formState: { errors }, handleSubmit, watch } = useForm();
   const loading = userStore((state) => state.loading)
   const setLoading = userStore((state) => state.setLoading)
+  
   useEffect(() => {
     if (!userdata) return
-    if (userdata) {
+    if (userdata && userdata.role == 'taxpayer') {
       navigate('/dashboard')
+    } else {
+      navigate('/admin-dashboard')
     }
   }, [location, userdata])
+
+
+  
 
   useEffect(() => {
     setLoading()
@@ -52,11 +58,13 @@ const Login = () => {
       }).finally(() => {
         if (location.state?.from) {
           navigate(location.state.from);
-        } else {
+        } else if (user.role == 'taxpayer') {
           navigate('/dashboard')
+        } else if (user.role == 'admin' || user.role == 'user') {
+          navigate('admin-dashboard')
         }
       }).catch((error) => {
-        console.log(`fucking error ${error}`)
+        console.log(`${error}`)
 
 
       })
